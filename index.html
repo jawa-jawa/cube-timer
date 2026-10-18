@@ -6,8 +6,11 @@
 <meta name="description" content="ルービックキューブのタイム計測、記録、成長グラフ">
 <title>CUBE TIME｜キューブタイマー</title>
 <style>
-:root{color-scheme:dark;--bg:#0c1421;--panel:#142236;--muted:#9dadc3;--line:#2a3a50;--mint:#86efc5;--text:#edf3fb}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Noto Sans JP",sans-serif}main{max-width:1000px;margin:auto;padding:30px 22px 60px}header{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px}.brand{font-size:19px;letter-spacing:.12em;font-weight:850}.brand span{color:var(--mint)}.tag{color:var(--muted);font-size:12px}.intro{font-size:13px;color:var(--muted)}h1{font-size:24px;margin:8px 0 24px}h2{font-size:17px;margin:0}.panel{background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:24px;margin-bottom:18px}.timer{text-align:center;padding:30px 24px}.status{color:var(--mint);font-size:13px;min-height:20px}.digits{font-variant-numeric:tabular-nums;font-size:clamp(48px,11vw,96px);letter-spacing:-.05em;font-weight:650;margin:20px 0 24px}.buttons{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}button,select,.filebutton{font:inherit;border-radius:12px;border:1px solid var(--line);padding:12px 16px;background:#1d2f46;color:var(--text);cursor:pointer;min-height:46px}button:focus-visible,select:focus-visible,.filebutton:focus-within{outline:3px solid var(--mint);outline-offset:3px}button:disabled{opacity:.3;cursor:default}.buttons button{font-weight:750;min-height:60px;touch-action:manipulation;user-select:none}.start{background:var(--mint);color:#09251c;border:0}.stop{background:#f5f7fb;color:#122235}.fail{color:#ffb3b3;border-color:#79505a;background:#3b2836}.hint{font-size:12px;color:var(--muted);line-height:1.8;margin:16px 0 0}.stats{margin:18px 0}.stats .stat{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 18px}.stats .stat strong{margin:0}.stat{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px}.stat small{color:var(--muted);font-size:12px}.stat strong{display:block;font-size:24px;margin-top:9px;font-variant-numeric:tabular-nums}.sectionhead{display:flex;gap:12px;justify-content:space-between;align-items:center;flex-wrap:wrap}.legend{font-size:12px;color:var(--muted);margin:15px 0}.legend span{color:var(--mint)}svg{display:block;width:100%;height:auto;min-height:180px}.empty{text-align:center;color:var(--muted);padding:45px 8px;font-size:14px}.tablewrap{overflow:auto;max-height:440px}thead{position:sticky;top:0;background:var(--panel);z-index:1}.record-check{width:22px;height:22px;accent-color:var(--mint);cursor:pointer}.check-cell{padding:12px;min-width:44px}.history-tools{margin:14px 0}.delete-selected{color:#ffb3b3}input:focus-visible{outline:3px solid var(--mint)}table{width:100%;border-collapse:collapse;font-size:14px}th,td{text-align:left;padding:14px 6px;border-bottom:1px solid var(--line);white-space:nowrap}th{color:var(--muted);font-size:12px}td.time{font-variant-numeric:tabular-nums;font-weight:700}.dnf{color:#ffb3b3}.delete{font-size:12px;padding:5px 10px;min-height:36px;background:transparent}.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}.toolbar button,.filebutton{font-size:12px}.filebutton input{position:absolute;width:1px;height:1px;opacity:0}footer{color:var(--muted);font-size:12px;line-height:1.9}#notice{color:#ffd18c;line-height:1.7;font-size:13px}body.running .timer{border-color:var(--mint)}@media(max-width:560px){main{padding:22px 14px 40px}.tag{display:none}.panel{padding:18px}.stat strong{font-size:23px}.buttons{gap:7px}.buttons button{padding:12px 4px;font-size:14px}h1{font-size:21px}}
+:root{color-scheme:dark;--bg:#0c1421;--panel:#142236;--muted:#9dadc3;--line:#2a3a50;--mint:#86efc5;--text:#edf3fb}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Noto Sans JP",sans-serif}main{max-width:1000px;margin:auto;padding:30px 22px 60px}header{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px}.brand{font-size:19px;letter-spacing:.12em;font-weight:850}.brand span{color:var(--mint)}.tag{color:var(--muted);font-size:12px}.intro{font-size:13px;color:var(--muted)}h1{font-size:24px;margin:8px 0 24px}h2{font-size:17px;margin:0}.panel{background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:24px;margin-bottom:18px}.timer{text-align:center;padding:30px 24px}.status{color:var(--mint);font-size:13px;min-height:20px}.digits{font-variant-numeric:tabular-nums;font-size:clamp(48px,11vw,96px);letter-spacing:-.05em;font-weight:650;margin:20px 0 24px}.buttons{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}button,select,.filebutton{font:inherit;border-radius:12px;border:1px solid var(--line);padding:12px 16px;background:#1d2f46;color:var(--text);cursor:pointer;min-height:46px}button:focus-visible,select:focus-visible,.filebutton:focus-within{outline:3px solid var(--mint);outline-offset:3px}button:disabled{opacity:.3;cursor:default}.buttons button{font-weight:750;min-height:60px;touch-action:manipulation;user-select:none}.start{background:var(--mint);color:#09251c;border:0}.stop{background:#f5f7fb;color:#122235}.fail{color:#ffb3b3;border-color:#79505a;background:#3b2836}.hint{font-size:12px;color:var(--muted);line-height:1.8;margin:16px 0 0}.stats{margin:18px 0}.stats .stat{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 18px}.stats .stat strong{margin:0}.stat{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px}.stat small{color:var(--muted);font-size:12px}.stat strong{display:block;font-size:24px;margin-top:9px;font-variant-numeric:tabular-nums}.sectionhead{display:flex;gap:12px;justify-content:space-between;align-items:center;flex-wrap:wrap}.legend{font-size:12px;color:var(--muted);margin:15px 0}.legend span{color:var(--mint)}svg{display:block;width:100%;height:auto;min-height:180px}.empty{text-align:center;color:var(--muted);padding:45px 8px;font-size:14px}.tablewrap{overflow:auto;max-height:440px}thead{position:sticky;top:0;background:var(--panel);z-index:1}.record-check{width:22px;height:22px;accent-color:var(--mint);cursor:pointer}.check-cell{padding:12px;min-width:44px}.history-tools{margin:14px 0}.delete-selected{color:#ffb3b3}input:focus-visible{outline:3px solid var(--mint)}table{width:100%;border-collapse:collapse;font-size:14px}th,td{text-align:left;padding:14px 6px;border-bottom:1px solid var(--line);white-space:nowrap}th{color:var(--muted);font-size:12px}td.time{font-variant-numeric:tabular-nums;font-weight:700}.dnf{color:#ffb3b3}.delete{font-size:12px;padding:5px 10px;min-height:36px;background:transparent}.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}.toolbar button,.filebutton{font-size:12px}.filebutton input{position:absolute;width:1px;height:1px;opacity:0}footer{color:var(--muted);font-size:12px;line-height:1.9}.practice-since{display:flex;flex-wrap:wrap;gap:12px 36px;border-top:1px solid var(--line);margin-top:20px;padding-top:18px}.practice-since .since-item{display:flex;flex-direction:column;gap:3px}.practice-since strong{color:var(--text);font-size:16px;font-weight:700;font-variant-numeric:tabular-nums}#notice{color:#ffd18c;line-height:1.7;font-size:13px}body.running .timer{border-color:var(--mint)}@media(max-width:560px){main{padding:22px 14px 40px}.tag{display:none}.panel{padding:18px}.stat strong{font-size:23px}.buttons{gap:7px}.buttons button{padding:12px 4px;font-size:14px}h1{font-size:21px}}
 .ma-controls{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0}.ma-choice{flex:1;min-width:145px;border:1px solid var(--line);border-radius:12px;padding:12px;cursor:pointer;font-size:13px}.ma-choice input{width:20px;height:20px;vertical-align:middle;margin-right:8px;accent-color:var(--ma-color)}.ma-value[hidden]{display:none}.ma-value{display:block;margin:8px 0 0 28px;font-weight:700;font-variant-numeric:tabular-nums;color:var(--ma-color)}.ma-choice:has(input:checked){border-color:var(--ma-color)}
+
+.chart-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.chart-actions button,.ma-head button{font-size:13px;padding:9px 12px;min-height:42px}.chart-actions select{font-size:13px;min-height:42px;padding:9px}.ma-head{display:flex;align-items:center;justify-content:space-between;margin:14px 0 0;font-size:13px;font-weight:700}.ma-controls{margin:10px 0 16px}.ma-choice{min-width:130px}#chart{width:100%;min-width:0}#chart svg{width:100%;height:auto;min-height:200px}.chart-panel:fullscreen,.chart-panel.fullscreen-fallback{display:flex;flex-direction:column;box-sizing:border-box;width:100vw;height:100dvh;max-width:none;max-height:none;min-height:0;margin:0;border-radius:0;overflow:auto;padding:clamp(12px,2vw,26px);background:var(--bg)}.chart-panel:fullscreen #chart,.chart-panel.fullscreen-fallback #chart{flex:1 1 auto;min-height:180px;display:flex;flex-direction:column}.chart-panel:fullscreen #chart svg,.chart-panel.fullscreen-fallback #chart svg{flex:1;min-height:0;height:100%;width:100%}.chart-panel:fullscreen .ma-controls,.chart-panel.fullscreen-fallback .ma-controls{margin-bottom:12px}.chart-panel.fullscreen-fallback{position:fixed;inset:0;z-index:900}body.chart-expanded{overflow:hidden}
+.settings-dialog{background:var(--panel);color:var(--text);border:1px solid #52637a;border-radius:20px;padding:22px;width:min(440px,calc(100% - 28px));max-height:calc(100dvh - 32px);overflow:auto;box-shadow:0 20px 70px #0009}.settings-dialog::backdrop{background:#000b}.settings-dialog form{margin:0}.dialog-title{display:flex;justify-content:space-between;align-items:center;gap:12px}.dialog-title h2{margin:0;font-size:19px}.dialog-x{font-size:24px;padding:2px 10px;min-height:36px}.settings-group{margin-top:18px}.settings-group h3{font-size:14px;font-weight:700;margin:0 0 9px}.input-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.ma-inputs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.settings-group label{display:block;color:var(--muted);font-size:12px;font-weight:650;min-width:0}.settings-group input{display:block;width:100%;margin-top:7px;box-sizing:border-box;padding:12px 9px;background:#0c1828;border:1px solid #45566b;border-radius:10px;color:var(--text);font:inherit;font-size:16px;min-height:46px}.settings-group input:focus-visible{outline:2px solid var(--mint);outline-offset:2px}.settings-note{font-size:12px;color:var(--muted);margin:12px 0 0}.settings-error{min-height:1.3em;margin:9px 0 0;color:#ffb3b3;font-size:12px}.dialog-actions{display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap;margin-top:10px}.dialog-actions button{font-size:13px;padding:10px 14px}.apply-btn{background:var(--mint);border-color:var(--mint);color:#09251c;font-weight:800}@media(max-width:560px){.chart-actions{width:100%}.chart-actions select{flex:1}.chart-actions button{padding:8px 10px}.ma-choice{min-width:95px;padding:8px;font-size:12px}.ma-choice input{margin-right:2px}.ma-value{margin-left:10px}.settings-dialog{padding:17px}.ma-inputs{gap:6px}}
 </style>
 <main>
 <header><div class="brand">▦ CUBE <span>TIME</span></div><div class="tag">ひと回しずつ、自己ベストへ。</div></header>
@@ -17,20 +20,47 @@
 <div id="status" class="status" role="status">準備ができたらスタート</div>
 <div id="clock" class="digits" aria-label="計測時間">0:00.00</div>
 <div class="buttons"><button id="start" class="start">スタート</button><button id="stop" class="stop" disabled>ストップ</button><button id="fail" class="fail" disabled>失敗</button></div>
-<p class="hint">PCではスペースキーで開始・停止できます。</p><p class="hint"><a href="https://www.pazru.net/LBL/" target="_blank" rel="noopener noreferrer" style="color:var(--mint);display:inline-block;padding:10px">解き方を見る（LBL法） ↗</a><br>わからなくなったときの参考に。別タブで開きます。計測中に開いた場合もタイマーは進みます。</p>
+<p class="hint">PCではスペースキーで開始・停止できます。</p><p class="hint"><a href="https://www.pazru.net/LBL/" target="_blank" rel="noopener noreferrer" style="color:var(--mint);display:inline-block;padding:10px">解き方を見る（LBL法） ↗</a></p>
 </section>
 <p id="notice" role="alert"></p>
 <div class="stats">
 <div class="stat"><small>自己ベスト</small><strong id="best">—</strong></div>
 </div>
-<section class="panel"><div class="sectionhead"><h2>タイムの推移</h2><select id="range" aria-label="グラフの表示範囲"><option value="30">直近30回</option><option value="100">直近100回</option><option value="0">全記録</option></select></div><p class="legend"><span>● 成功タイム</span>　× 失敗（DNF）　縦軸：秒 / 横軸：挑戦番号</p><div class="ma-controls" aria-label="移動平均線の表示切替">
-<label class="ma-choice" style="--ma-color:#ffcc80"><input id="ma5" type="checkbox">5回移動平均<span id="maValue5" class="ma-value" aria-live="polite" hidden></span></label>
-<label class="ma-choice" style="--ma-color:#88bfff"><input id="ma20" type="checkbox">20回移動平均<span id="maValue20" class="ma-value" aria-live="polite" hidden></span></label>
-<label class="ma-choice" style="--ma-color:#dfa2ff"><input id="ma100" type="checkbox">100回移動平均<span id="maValue100" class="ma-value" aria-live="polite" hidden></span></label>
-</div><p class="hint">チェックした平均線と最新値を表示します。成功した直近5・20・100回の単純平均です（失敗は除外）。表示範囲より前の成功記録も計算に含めます。</p><div id="chart"></div><p class="hint">短いタイムほど下に表示されます。失敗の位置では線を途切れさせます。</p></section>
+<section id="chartPanel" class="panel chart-panel" aria-label="タイムの推移">
+<div class="sectionhead"><h2>タイムの推移</h2><div class="chart-actions">
+<select id="range" aria-label="グラフの表示範囲"><option value="30">直近30回</option><option value="100">直近100回</option><option value="0">全記録</option><option value="custom" hidden>指定範囲</option></select>
+<button id="chartSettingsBtn" type="button">グラフ設定</button><button id="chartFullscreenBtn" type="button" aria-pressed="false">全画面表示</button>
+</div></div>
+<p class="legend"><span>● 成功タイム</span>　× 失敗（DNF）　縦軸：秒 / 横軸：挑戦番号</p>
+<div class="ma-head"><span>移動平均</span><button id="maSettingsBtn" type="button">数値設定</button></div>
+<div class="ma-controls" aria-label="移動平均線の表示切替">
+<label class="ma-choice" style="--ma-color:#ffcc80"><input id="ma0" type="checkbox"><span id="maLabel0">5回移動平均</span><span id="maValue0" class="ma-value" aria-live="polite" hidden></span></label>
+<label class="ma-choice" style="--ma-color:#88bfff"><input id="ma1" type="checkbox"><span id="maLabel1">20回移動平均</span><span id="maValue1" class="ma-value" aria-live="polite" hidden></span></label>
+<label class="ma-choice" style="--ma-color:#dfa2ff"><input id="ma2" type="checkbox"><span id="maLabel2">100回移動平均</span><span id="maValue2" class="ma-value" aria-live="polite" hidden></span></label>
+</div><div id="chart" aria-live="off"></div>
+</section>
+<dialog id="chartSettingsDialog" class="settings-dialog" aria-labelledby="chartSettingsTitle">
+<form id="chartSettingsForm" novalidate>
+<div class="dialog-title"><h2 id="chartSettingsTitle">グラフ設定</h2><button class="dialog-x" type="button" data-close="chartSettingsDialog" aria-label="閉じる">×</button></div>
+<div class="settings-group"><h3>横軸（挑戦番号）</h3><div class="input-grid"><label>開始番号<input id="xMinInput" type="number" min="1" max="10000000" step="1" inputmode="numeric" placeholder="自動"></label><label>終了番号<input id="xMaxInput" type="number" min="1" max="10000000" step="1" inputmode="numeric" placeholder="自動"></label></div></div>
+<div class="settings-group"><h3>縦軸（秒）</h3><div class="input-grid"><label>最小値<input id="yMinInput" type="number" min="0" max="31536000" step="any" inputmode="decimal" placeholder="自動"></label><label>最大値<input id="yMaxInput" type="number" min="0" max="31536000" step="any" inputmode="decimal" placeholder="自動"></label></div></div>
+<p class="settings-note">空欄は自動設定です。</p><p id="chartSettingsError" class="settings-error" role="alert"></p>
+<div class="dialog-actions"><button id="chartSettingsReset" type="button">自動に戻す</button><button type="submit" class="apply-btn">設定を反映</button></div>
+</form></dialog>
+<dialog id="maSettingsDialog" class="settings-dialog" aria-labelledby="maSettingsTitle">
+<form id="maSettingsForm" novalidate>
+<div class="dialog-title"><h2 id="maSettingsTitle">移動平均の数値設定</h2><button class="dialog-x" type="button" data-close="maSettingsDialog" aria-label="閉じる">×</button></div>
+<div class="settings-group"><div class="ma-inputs"><label>1本目（回）<input id="maInput0" type="number" required min="1" max="100000" step="1" inputmode="numeric"></label><label>2本目（回）<input id="maInput1" type="number" required min="1" max="100000" step="1" inputmode="numeric"></label><label>3本目（回）<input id="maInput2" type="number" required min="1" max="100000" step="1" inputmode="numeric"></label></div></div>
+<p id="maSettingsError" class="settings-error" role="alert"></p>
+<div class="dialog-actions"><button id="maSettingsReset" type="button">5・20・100に戻す</button><button type="submit" class="apply-btn">設定を反映</button></div>
+</form></dialog>
 <section class="panel"><div class="sectionhead"><h2>挑戦の記録</h2><select id="historyOrder" aria-label="履歴の表示順"><option value="new">新しい順</option><option value="old">古い順</option></select></div><div class="toolbar history-tools"><button id="deleteSelected" class="delete-selected" disabled>選択した記録を削除（0件）</button><button id="clearSelection" disabled>選択を解除</button></div><p class="hint" style="margin:0 0 12px">履歴内をスクロールすると過去の記録を確認できます。テスト計測にチェックを入れ、まとめて削除できます。</p><div class="tablewrap"><table><thead><tr><th class="check-cell"><input id="selectAllRecords" class="record-check" type="checkbox" aria-label="すべての記録を選択"></th><th>挑戦</th><th>日時</th><th>タイム</th><th></th></tr></thead><tbody id="history"></tbody></table><p id="nohistory" class="empty">最初の記録は、ここから。</p></div>
 <div class="toolbar"><button id="export">CSV保存</button><button id="share">CSVを共有</button><label class="filebutton">CSV・旧バックアップ読込<input id="import" type="file" accept=".csv,text/csv,.json,application/json"></label></div></section>
-<footer>記録はこの端末・このブラウザに保存されます。別の端末への自動同期はありません。<br>ブラウザのデータ削除に備えて、定期的にバックアップしてください。</footer>
+<footer>記録はこの端末・このブラウザに保存されます。別の端末への自動同期はありません。<br>ブラウザのデータ削除に備えて、定期的にバックアップしてください。
+<div class="practice-since" aria-label="記録開始日と経過期間">
+<div class="since-item"><span>記録開始日</span><strong id="recordStartDate">—</strong></div>
+<div class="since-item"><span>開始から</span><strong id="recordElapsed">—</strong></div>
+</div></footer>
 </main>
 <script>
 'use strict';
@@ -40,6 +70,29 @@ const selectedRecords=new Set();
 let currentScramble='',scrambleBusy=false; const SCRAMBLE_KEY='cube-time.current-scramble.v1';
 function valid(r){return r&&typeof r.id==='string'&&r.id.length<200&&Number.isFinite(r.at)&&r.at>=0&&r.at<=8640000000000000&&Number.isFinite(r.ms)&&r.ms>=0&&r.ms<=31536000000&&['ok','dnf'].includes(r.result)&&(r.scramble===undefined||(typeof r.scramble==='string'&&r.scramble.length<1000))}
 function format(ms){const c=Math.floor(ms/10);return Math.floor(c/6000)+':'+String(Math.floor(c/100)%60).padStart(2,'0')+'.'+String(c%100).padStart(2,'0')}
+// 日付を基準に年・月・日で計算します（時刻や夏時間によって日数がずれないようにする）。
+function localDay(timestamp){const d=new Date(timestamp);return new Date(d.getFullYear(),d.getMonth(),d.getDate())}
+function shiftCalendarDay(date,years,months){const y=date.getFullYear()+years,m=date.getMonth()+months,last=new Date(y,m+1,0).getDate();return new Date(y,m,Math.min(date.getDate(),last))}
+function calendarElapsed(from,to){if(from>to)return {years:0,months:0,days:0};
+ let years=to.getFullYear()-from.getFullYear();if(shiftCalendarDay(from,years,0)>to)years--;
+ const anniversary=shiftCalendarDay(from,years,0);
+ let months=(to.getFullYear()-anniversary.getFullYear())*12+to.getMonth()-anniversary.getMonth();
+ if(shiftCalendarDay(anniversary,0,months)>to)months--;
+ const mark=shiftCalendarDay(anniversary,0,months);
+ const utcDate=d=>Date.UTC(d.getFullYear(),d.getMonth(),d.getDate());
+ return {years,months,days:Math.round((utcDate(to)-utcDate(mark))/86400000)};
+}
+function updateRecordStart(){
+ const earliest=records.reduce((first,r)=>Math.min(first,r.at),Infinity);
+ if(!Number.isFinite(earliest)){$('recordStartDate').textContent='記録なし';$('recordElapsed').textContent='—';return}
+ const firstDate=localDay(earliest),today=localDay(Date.now()),elapsed=calendarElapsed(firstDate,today);
+ $('recordStartDate').textContent=firstDate.toLocaleDateString('ja-JP',{year:'numeric',month:'long',day:'numeric'});
+ $('recordElapsed').textContent=elapsed.years+'年'+elapsed.months+'ヶ月'+elapsed.days+'日';
+}
+// ページを開きっぱなしでも、日付が変われば経過期間を更新します。
+function scheduleRecordStartRefresh(){const now=new Date(),tomorrow=new Date(now.getFullYear(),now.getMonth(),now.getDate()+1);setTimeout(()=>{updateRecordStart();scheduleRecordStartRefresh()},Math.max(1000,tomorrow.getTime()-now.getTime()+100))}
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)updateRecordStart()});
+
 function notice(t){$('notice').textContent=t}
 try{const raw=localStorage.getItem(KEY);if(raw){const parsed=JSON.parse(raw);if(!Array.isArray(parsed)||!parsed.every(valid))throw Error();records=parsed}localStorage.setItem('cube-time.check','1');localStorage.removeItem('cube-time.check')}catch(e){storageBroken=true;notice('保存済みデータを読み込めないか、ブラウザ保存が利用できません。既存データ保護のため自動保存を停止しています。新しい記録はバックアップ保存してください。')}
 function save(){if(storageBroken)return false;try{localStorage.setItem(KEY,JSON.stringify(records));return true}catch(e){notice('端末に保存できませんでした。ページを閉じる前にCSV保存してください。');return false}}
@@ -56,19 +109,121 @@ $('best').textContent=good.length?format(good.reduce((m,r)=>Math.min(m,r.ms),Inf
 $('history').replaceChildren();$('nohistory').hidden=records.length>0;
 ( $('historyOrder').value==='old'?records.map((r,i)=>({r,i})):records.map((r,i)=>({r,i})).reverse()).forEach(({r,i})=>{const tr=document.createElement('tr'),checkCell=document.createElement('td'),check=document.createElement('input');checkCell.className='check-cell';check.type='checkbox';check.className='record-check';check.checked=selectedRecords.has(r.id);check.setAttribute('aria-label','挑戦'+(i+1)+'を選択');check.onchange=()=>{check.checked?selectedRecords.add(r.id):selectedRecords.delete(r.id);updateSelection()};checkCell.append(check);tr.append(checkCell);const values=['#'+(i+1),new Date(r.at).toLocaleString('ja-JP',{month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',year:'numeric'}),r.result==='ok'?format(r.ms):'DNF'];
 values.forEach((v,j)=>{const td=document.createElement('td');td.textContent=v;if(j===2)td.className='time '+(r.result==='dnf'?'dnf':'');if(j===2&&r.scramble){const detail=document.createElement('details'),summary=document.createElement('summary'),line=document.createElement('p');summary.textContent='混ぜ方';line.textContent=r.scramble;line.style.cssText='max-width:280px;white-space:normal;font:12px/1.8 monospace';detail.append(summary);detail.append(line);td.append(detail)}tr.append(td)});
-const td=document.createElement('td'),b=document.createElement('button');b.className='delete';b.textContent='削除';b.setAttribute('aria-label','挑戦'+(i+1)+'を削除');b.onclick=()=>deleteRecords([r.id]);td.append(b);tr.append(td);$('history').append(tr)});chart();updateSelection()}
-const MA_WINDOWS=[5,20,100],MA_COLORS={5:'#ffcc80',20:'#88bfff',100:'#dfa2ff'},MA_DASH={5:'',20:'8 4',100:'3 4'};
+const td=document.createElement('td'),b=document.createElement('button');b.className='delete';b.textContent='削除';b.setAttribute('aria-label','挑戦'+(i+1)+'を削除');b.onclick=()=>deleteRecords([r.id]);td.append(b);tr.append(td);$('history').append(tr)});chart();updateSelection();updateRecordStart()}
+const MA_DEFAULTS=[5,20,100];
+const MA_COLORS=['#ffcc80','#88bfff','#dfa2ff'],MA_DASH=['','8 4','3 4'];
+const MA_WINDOW_KEY='cube-time.ma-windows.v1',MA_VISIBLE_KEY='cube-time.ma-visible.v2';
+const CHART_SETTINGS_KEY='cube-time.chart-settings.v1';
+let maWindows=MA_DEFAULTS.slice(),axisSettings={xMin:null,xMax:null,yMin:null,yMax:null};
+function readSetting(key){try{return JSON.parse(localStorage.getItem(key))}catch(e){return null}}
+function storeSetting(key,value){try{localStorage.setItem(key,JSON.stringify(value))}catch(e){notice('設定を保存できませんでした。次回は設定が初期値に戻る場合があります。')}}
+function isValidWindowArray(w){return Array.isArray(w)&&w.length===3&&w.every(n=>Number.isInteger(n)&&n>=1&&n<=100000)&&new Set(w).size===3}
 function movingAverages(items,windowSize){const successes=[],points=[];let sum=0;for(let i=0;i<items.length;i++){const r=items[i];if(r.result!=='ok')continue;successes.push(r.ms);sum+=r.ms;if(successes.length>windowSize)sum-=successes[successes.length-windowSize-1];if(successes.length>=windowSize)points.push({index:i,ms:sum/windowSize})}return {points,count:successes.length,latest:points.length?points[points.length-1].ms:null}}
-function setupMovingAverages(){let enabled=[];try{const stored=JSON.parse(localStorage.getItem('cube-time.ma.v1')||'[]');if(Array.isArray(stored))enabled=stored}catch(e){}for(const n of MA_WINDOWS){$('ma'+n).checked=enabled.includes(n);$('ma'+n).onchange=()=>{try{localStorage.setItem('cube-time.ma.v1',JSON.stringify(MA_WINDOWS.filter(k=>$('ma'+k).checked)))}catch(e){}chart()}}}
-function chart(){const averages=MA_WINDOWS.map(size=>({size,...movingAverages(records,size)}));for(const a of averages){const value=$('maValue'+a.size);value.hidden=!$('ma'+a.size).checked;value.textContent=a.latest===null?'成功あと'+Math.max(0,a.size-a.count)+'回':'最新 '+format(a.latest)}const enabled=averages.filter(a=>$('ma'+a.size).checked);const n=Number($('range').value),offset=n?Math.max(0,records.length-n):0,rows=records.slice(offset);if(!rows.length){$('chart').innerHTML='<p class="empty">計測すると、タイムの推移が表示されます。</p>';return}
-const W=850,H=260,L=65,R=25,T=18,B=42,max=Math.max(rows.reduce((m,r)=>r.result==='ok'?Math.max(m,r.ms/1000):m,10),...enabled.map(a=>a.points.reduce((m,p)=>p.index>=offset?Math.max(m,p.ms/1000):m,0)))*1.12;
-const x=i=>L+(rows.length===1?(W-L-R)/2:i*(W-L-R)/(rows.length-1)),y=v=>H-B-v/max*(H-T-B);
-let s='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="成功タイムの推移。各記録の詳細は下の表に表示。">';
-for(let i=0;i<=4;i++){const v=max*i/4,py=y(v);s+='<line x1="'+L+'" x2="'+(W-R)+'" y1="'+py+'" y2="'+py+'" stroke="#2a3a50"/><text x="'+(L-10)+'" y="'+(py+4)+'" text-anchor="end" fill="#9dadc3" font-size="12">'+v.toFixed(1)+'</text>'}
-let previous=null;rows.forEach((r,i)=>{const px=x(i);if(r.result==='dnf'){s+='<text x="'+px+'" y="'+(T+10)+'" text-anchor="middle" fill="#ffb3b3" font-size="20">×<title>挑戦'+(offset+i+1)+'：DNF</title></text>';previous=null}else{const py=y(r.ms/1000);if(previous)s+='<line x1="'+previous[0]+'" y1="'+previous[1]+'" x2="'+px+'" y2="'+py+'" stroke="#86efc5" stroke-width="2"/>';s+='<circle cx="'+px+'" cy="'+py+'" r="4" fill="#86efc5"><title>挑戦'+(offset+i+1)+'：'+format(r.ms)+'</title></circle>';previous=[px,py]}if(i===0||i===rows.length-1||i%Math.ceil(rows.length/6)===0)s+='<text x="'+px+'" y="'+(H-12)+'" text-anchor="middle" fill="#9dadc3" font-size="12">#'+(offset+i+1)+'</text>'});for(const a of enabled){const points=a.points.filter(p=>p.index>=offset);if(!points.length)continue;const coords=points.map(p=>x(p.index-offset)+','+y(p.ms/1000)).join(' ');s+='<polyline data-ma="'+a.size+'" points="'+coords+'" fill="none" stroke="'+MA_COLORS[a.size]+'" stroke-width="3" stroke-dasharray="'+MA_DASH[a.size]+'" stroke-linejoin="round"><title>'+a.size+'回移動平均</title></polyline>';for(const p of points)s+='<circle cx="'+x(p.index-offset)+'" cy="'+y(p.ms/1000)+'" r="3" fill="'+MA_COLORS[a.size]+'"><title>挑戦'+(p.index+1)+'：'+a.size+'回移動平均 '+format(p.ms)+'</title></circle>'} $('chart').innerHTML=s+'</svg>'}
+function setupMovingAverages(){
+ const saved=readSetting(MA_WINDOW_KEY);if(isValidWindowArray(saved))maWindows=saved.slice();
+ let enabled=readSetting(MA_VISIBLE_KEY);
+ if(!Array.isArray(enabled)||enabled.length!==3||!enabled.every(v=>typeof v==='boolean')){
+  const old=readSetting('cube-time.ma.v1');enabled=maWindows.map(n=>Array.isArray(old)&&old.includes(n));
+ }
+ for(let slot=0;slot<3;slot++){const input=$('ma'+slot);input.checked=enabled[slot];input.onchange=()=>{storeSetting(MA_VISIBLE_KEY,[0,1,2].map(i=>$('ma'+i).checked));chart()}}
+ updateMaLabels();
+}
+function updateMaLabels(){maWindows.forEach((n,i)=>{$('maLabel'+i).textContent=n+'回移動平均'})}
+function setupChartSettings(){const saved=readSetting(CHART_SETTINGS_KEY);if(saved&&typeof saved==='object'){
+ for(const key of Object.keys(axisSettings)){
+  const n=saved[key],isX=key.startsWith('x'),limit=isX?10000000:31536000;
+  if(n===null||n===undefined){axisSettings[key]=null;continue}
+  if(typeof n==='number'&&Number.isFinite(n)&&n>=(isX?1:0)&&n<=limit&&(!isX||Number.isInteger(n)))axisSettings[key]=n;
+ }
+ }
+ if(axisSettings.xMin!==null&&axisSettings.xMax!==null&&axisSettings.xMin>axisSettings.xMax){axisSettings.xMin=null;axisSettings.xMax=null}
+ if(axisSettings.yMin!==null&&axisSettings.yMax!==null&&axisSettings.yMin>=axisSettings.yMax){axisSettings.yMin=null;axisSettings.yMax=null}
+ updateRangeSelect();
+}
+function updateRangeSelect(){const custom=axisSettings.xMin!==null||axisSettings.xMax!==null;$('range').querySelector('[value="custom"]').hidden=!custom;
+ if(custom)$('range').value='custom';else if($('range').value==='custom')$('range').value='30';}
+function showSettings(dialogId){const d=$(dialogId);if(typeof d.showModal==='function')d.showModal();else d.setAttribute('open','')}
+function closeSettings(dialogId){const d=$(dialogId);if(typeof d.close==='function')d.close();else d.removeAttribute('open')}
+for(const btn of document.querySelectorAll('[data-close]'))btn.onclick=()=>closeSettings(btn.dataset.close);
+function parseSettingNumber(inputId){const el=$(inputId),str=el.value.trim();if(!el.validity.valid){el.reportValidity();throw Error('入力可能な範囲の数値を指定してください。')}return str===''?null:Number(str)}
+$('chartSettingsBtn').onclick=()=>{
+ const fields={xMin:'xMinInput',xMax:'xMaxInput',yMin:'yMinInput',yMax:'yMaxInput'};
+ for(const [key,id] of Object.entries(fields))$(id).value=axisSettings[key]===null?'':String(axisSettings[key]);
+ $('chartSettingsError').textContent='';showSettings('chartSettingsDialog');
+};
+$('chartSettingsForm').onsubmit=e=>{e.preventDefault();try{
+ const next={xMin:parseSettingNumber('xMinInput'),xMax:parseSettingNumber('xMaxInput'),yMin:parseSettingNumber('yMinInput'),yMax:parseSettingNumber('yMaxInput')};
+ if(next.xMin!==null&&next.xMax!==null&&next.xMin>next.xMax)throw Error('横軸の開始番号は終了番号以下にしてください。');
+ if(next.yMax!==null&&next.yMax<=(next.yMin??0))throw Error('縦軸の最大値は最小値より大きくしてください。');
+ axisSettings=next;storeSetting(CHART_SETTINGS_KEY,axisSettings);updateRangeSelect();closeSettings('chartSettingsDialog');chart();
+ }catch(err){$('chartSettingsError').textContent=err.message||'設定できませんでした。'}};
+$('chartSettingsReset').onclick=()=>{
+ axisSettings={xMin:null,xMax:null,yMin:null,yMax:null};storeSetting(CHART_SETTINGS_KEY,axisSettings);updateRangeSelect();closeSettings('chartSettingsDialog');chart();
+};
+$('maSettingsBtn').onclick=()=>{for(let i=0;i<3;i++)$('maInput'+i).value=maWindows[i];$('maSettingsError').textContent='';showSettings('maSettingsDialog')};
+$('maSettingsForm').onsubmit=e=>{e.preventDefault();try{
+ const values=[0,1,2].map(i=>parseSettingNumber('maInput'+i));
+ if(!isValidWindowArray(values))throw Error('1～100000回の重複しない整数を3つ指定してください。');
+ maWindows=values;storeSetting(MA_WINDOW_KEY,maWindows);updateMaLabels();closeSettings('maSettingsDialog');chart();
+ }catch(err){$('maSettingsError').textContent=err.message||'設定できませんでした。'}};
+$('maSettingsReset').onclick=()=>{maWindows=MA_DEFAULTS.slice();storeSetting(MA_WINDOW_KEY,maWindows);updateMaLabels();closeSettings('maSettingsDialog');chart()};
+function expandedChart(){return document.fullscreenElement===$('chartPanel')||$('chartPanel').classList.contains('fullscreen-fallback')}
+function fullscreenButton(){const active=expandedChart();$('chartFullscreenBtn').textContent=active?'全画面を閉じる':'全画面表示';$('chartFullscreenBtn').setAttribute('aria-pressed',String(active))}
+function clearFullscreenFallback(){$('chartPanel').classList.remove('fullscreen-fallback');document.body.classList.remove('chart-expanded')}
+function syncFullscreen(){fullscreenButton();requestAnimationFrame(chart)}
+$('chartFullscreenBtn').onclick=async()=>{
+ const panel=$('chartPanel');
+ if(panel.classList.contains('fullscreen-fallback')){clearFullscreenFallback();syncFullscreen();return}
+ if(document.fullscreenElement===panel){try{await document.exitFullscreen()}catch(e){clearFullscreenFallback()}syncFullscreen();return}
+ try{if(!panel.requestFullscreen)throw Error('not supported');await panel.requestFullscreen()}catch(e){panel.classList.add('fullscreen-fallback');document.body.classList.add('chart-expanded')}
+ syncFullscreen();
+};
+document.addEventListener('fullscreenchange',syncFullscreen);
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&$('chartPanel').classList.contains('fullscreen-fallback')){clearFullscreenFallback();syncFullscreen()}});
+let scheduledChart=0;window.addEventListener('resize',()=>{cancelAnimationFrame(scheduledChart);scheduledChart=requestAnimationFrame(chart)});
+function tickLabels(min,max,segments){const ticks=[];for(let i=0;i<=segments;i++){const v=Math.round(min+(max-min)*i/segments);if(!ticks.includes(v))ticks.push(v)}return ticks}
+function chart(){
+ const averages=maWindows.map((size,slot)=>({slot,size,...movingAverages(records,size)}));
+ for(const a of averages){const value=$('maValue'+a.slot);value.hidden=!$('ma'+a.slot).checked;value.textContent=a.latest===null?'成功あと'+Math.max(0,a.size-a.count)+'回':'最新 '+format(a.latest)}
+ const enabled=averages.filter(a=>$('ma'+a.slot).checked);
+ const el=$('chart');if(!records.length){el.innerHTML='<p class="empty">計測すると、タイムの推移が表示されます。</p>';return}
+ const n=Number($('range').value),hasCustomX=axisSettings.xMin!==null||axisSettings.xMax!==null;
+ const autoMin=n?Math.max(1,records.length-n+1):1;
+ const xMin=hasCustomX?(axisSettings.xMin??1):autoMin;
+ const xMax=hasCustomX?(axisSettings.xMax??Math.max(records.length,xMin)):records.length;
+ const visible=records.map((r,i)=>({r,index:i,attempt:i+1})).filter(p=>p.attempt>=xMin&&p.attempt<=xMax);
+ const visibleMax=Math.max(10,...visible.filter(p=>p.r.result==='ok').map(p=>p.r.ms/1000),...enabled.flatMap(a=>a.points.filter(p=>p.index+1>=xMin&&p.index+1<=xMax).map(p=>p.ms/1000)));
+ const yMin=axisSettings.yMin??0;
+ let yMax=axisSettings.yMax??(visibleMax*1.12);
+ if(yMax<=yMin)yMax=yMin+Math.max(1,Math.abs(yMin)*0.12);
+ const width=Math.max(360,Math.round(el.clientWidth||850));
+ const height=expandedChart()?Math.max(230,Math.round(el.clientHeight||300)):290;
+ const W=width,H=height,L=66,R=24,T=20,B=42,plotW=W-L-R,plotH=H-T-B;
+ const x=attempt=>L+(xMax===xMin?plotW/2:(attempt-xMin)/(xMax-xMin)*plotW);
+ const y=v=>H-B-(v-yMin)/(yMax-yMin)*plotH;
+ let s='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="タイムの推移。横軸：挑戦番号、縦軸：秒。詳細は挑戦の記録を参照。">';
+ s+='<defs><clipPath id="plotClip"><rect x="'+L+'" y="'+T+'" width="'+plotW+'" height="'+plotH+'"/></clipPath></defs>';
+ for(let i=0;i<=4;i++){const v=yMin+(yMax-yMin)*i/4,py=y(v);
+ const label=Number(v.toFixed(2)).toLocaleString('ja-JP',{maximumFractionDigits:2});
+ s+='<line x1="'+L+'" x2="'+(W-R)+'" y1="'+py+'" y2="'+py+'" stroke="#2a3a50"/><text x="'+(L-10)+'" y="'+(py+4)+'" text-anchor="end" fill="#9dadc3" font-size="12">'+label+'</text>'}
+ for(const v of tickLabels(xMin,xMax,5)){const px=x(v);s+='<line x1="'+px+'" x2="'+px+'" y1="'+T+'" y2="'+(H-B)+'" stroke="#26364a"/><text x="'+px+'" y="'+(H-12)+'" text-anchor="middle" fill="#9dadc3" font-size="12">#'+v+'</text>'}
+ s+='<g clip-path="url(#plotClip)">';
+ let prev=null;
+ for(const p of visible){const {r,attempt}=p,px=x(attempt);
+  if(r.result==='dnf'){s+='<text x="'+px+'" y="'+(T+18)+'" text-anchor="middle" fill="#ffb3b3" font-size="20">×<title>挑戦'+attempt+'：DNF</title></text>';prev=null}
+  else{const py=y(r.ms/1000);if(prev)s+='<line x1="'+prev[0]+'" y1="'+prev[1]+'" x2="'+px+'" y2="'+py+'" stroke="#86efc5" stroke-width="2"/>';
+   s+='<circle cx="'+px+'" cy="'+py+'" r="4" fill="#86efc5"><title>挑戦'+attempt+'：'+format(r.ms)+'</title></circle>';prev=[px,py]}}
+ for(const a of enabled){const points=a.points.filter(p=>p.index+1>=xMin&&p.index+1<=xMax);if(!points.length)continue;
+  const coords=points.map(p=>x(p.index+1)+','+y(p.ms/1000)).join(' ');
+  s+='<polyline data-ma="'+a.slot+'" points="'+coords+'" fill="none" stroke="'+MA_COLORS[a.slot]+'" stroke-width="3" stroke-dasharray="'+MA_DASH[a.slot]+'" stroke-linejoin="round"><title>'+a.size+'回移動平均</title></polyline>';
+  for(const p of points)s+='<circle cx="'+x(p.index+1)+'" cy="'+y(p.ms/1000)+'" r="3" fill="'+MA_COLORS[a.slot]+'"><title>挑戦'+(p.index+1)+'：'+a.size+'回移動平均 '+format(p.ms)+'</title></circle>'}
+ s+='</g></svg>';
+ if(!visible.length)s+='<p class="empty" style="padding:8px">指定範囲に記録がありません。</p>';
+ el.innerHTML=s;
+}
 $('historyOrder').onchange=render;$('deleteSelected').onclick=()=>deleteRecords([...selectedRecords]);$('clearSelection').onclick=()=>{selectedRecords.clear();render()};$('selectAllRecords').onchange=()=>{if(running)return;if($('selectAllRecords').checked)records.forEach(r=>selectedRecords.add(r.id));else selectedRecords.clear();render()};
-$('start').onclick=start;$('stop').onclick=()=>finish('ok');$('fail').onclick=()=>finish('dnf');$('range').onchange=chart;
-document.addEventListener('keydown',e=>{if(e.code==='Space'&&!e.repeat&&!/INPUT|SELECT|BUTTON|TEXTAREA/.test(e.target.tagName)){e.preventDefault();running?finish('ok'):start()}});
+$('start').onclick=start;$('stop').onclick=()=>finish('ok');$('fail').onclick=()=>finish('dnf');$('range').onchange=()=>{if($('range').value!=='custom'){axisSettings.xMin=null;axisSettings.xMax=null;storeSetting(CHART_SETTINGS_KEY,axisSettings);updateRangeSelect()}chart()};
+document.addEventListener('keydown',e=>{if(e.code==='Space'&&!e.repeat&&!document.querySelector('dialog[open]')&&!/INPUT|SELECT|BUTTON|TEXTAREA/.test(e.target.tagName)){e.preventDefault();running?finish('ok'):start()}});
 document.addEventListener('visibilitychange',()=>{if(!document.hidden&&running)wake()});
 window.addEventListener('beforeunload',e=>{if(running){e.preventDefault();e.returnValue=''}});
 const CSV_HEADER=['record_id','recorded_at','elapsed_ms','result','time','scramble'];
@@ -90,7 +245,9 @@ $('share').onclick=async()=>{const file=csvFile();try{if(navigator.canShare&&nav
 $('import').onchange=async e=>{const f=e.target.files[0];if(!f)return;try{if(running)throw Error('読込は計測を終了してから行ってください。');if(f.size>10000000)throw Error('ファイルが大きすぎます（上限10MB）。');const incoming=readBackup(await f.text());if(running)throw Error('読込は計測を終了してから行ってください。');const {add,duplicates}=mergeRecords(records,incoming);if(!add.length){notice('追加する記録はありません。重複 '+duplicates+' 件をスキップしました。');return}if(confirm(add.length+'件を追加します。重複 '+duplicates+' 件はスキップし、現在の記録も残します。')){records.push(...add);records.sort((a,b)=>a.at-b.at);const saved=save();render();notice(add.length+'件を追加しました（重複 '+duplicates+' 件）。'+(saved?'この端末に保存しました。':'端末への保存ができていません。ページを閉じる前にCSV保存してください。'))}}catch(err){notice(err.message||'ファイルを読み込めませんでした。')}finally{e.target.value=''}};
 window.addEventListener('storage',e=>{if(e.key===KEY){storageBroken=true;notice('別のタブで記録が変更されました。このタブのバックアップを保存してから再読み込みしてください。同時利用は避けてください。自動保存を停止しました。')}});
 setupMovingAverages();
+setupChartSettings();
 render();
+scheduleRecordStartRefresh();
 try{const old=Number(localStorage.getItem(ACTIVE));if(Number.isFinite(old)&&old>0&&old<=Date.now()&&Date.now()-old<31536000000){started=old;running=true;document.body.classList.add('running');$('start').disabled=true;$('stop').disabled=false;$('fail').disabled=false;$('newScramble').disabled=true;$('status').textContent='中断された計測を復元しました';try{currentScramble=localStorage.getItem(SCRAMBLE_KEY)||''}catch(e){}$('scramble').textContent=currentScramble||'旧バージョンの計測（混ぜ方の記録なし）';tick()}}catch(e){}
 async function prepareScramble(){if(running||scrambleBusy)return;scrambleBusy=true;currentScramble='';$('start').disabled=true;$('newScramble').disabled=true;$('scramble').textContent='新しい手順を生成しています…';try{localStorage.removeItem(SCRAMBLE_KEY)}catch(e){}
 let timeout;try{const value=await Promise.race([import('./scrambler.js').then(m=>m.generateScramble()),new Promise((_,reject)=>{timeout=setTimeout(()=>reject(Error('timeout')),45000)})]);currentScramble=value;$('scramble').textContent=value;try{localStorage.setItem(SCRAMBLE_KEY,value)}catch(e){}$('start').disabled=false}catch(e){$('scramble').textContent='手順を生成できませんでした。GitHub Pagesで開き、必要なファイル一式が配置されていることを確認して、再試行してください。';$('newScramble').textContent='生成を再試行'}finally{clearTimeout(timeout);scrambleBusy=false;$('newScramble').disabled=false}}
