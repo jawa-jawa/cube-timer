@@ -234,7 +234,7 @@ function chart(){
  if(yMax<=yMin)yMax=yMin+Math.max(1,Math.abs(yMin)*0.12);
  const width=Math.max(360,Math.round(el.clientWidth||850));
  const height=expandedChart()?Math.max(230,Math.round(el.clientHeight||300)):290;
- const W=width,H=height,L=66,R=24,T=20,B=42,plotW=W-L-R,plotH=H-T-B;
+ const W=width,H=height,L=66,R=24,T=42,B=42,plotW=W-L-R,plotH=H-T-B;
  const x=attempt=>L+(xMax===xMin?plotW/2:(attempt-xMin)/(xMax-xMin)*plotW);
  const y=v=>H-B-(v-yMin)/(yMax-yMin)*plotH;
  let s='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="タイムの推移。横軸：挑戦番号、縦軸：秒。詳細は挑戦の記録を参照。">';
@@ -256,7 +256,7 @@ function chart(){
   for(const p of points)s+='<circle cx="'+x(p.index+1)+'" cy="'+y(p.ms/1000)+'" r="3" fill="'+MA_COLOR+'"><title>挑戦'+(p.index+1)+'：'+maWindow+'回移動平均 '+format(p.ms)+'</title></circle>';
  }
  s+='</g>';
- for(const {r,attempt,index} of visible){if(!r.comment)continue;const rawY=r.result==='dnf'?T+18:y(r.ms/1000);if(rawY<T||rawY>H-B)continue;const mx=Math.max(L+12,Math.min(W-R-12,x(attempt))),my=Math.max(T+12,Math.min(H-B-12,rawY-17));s+='<g class="comment-marker" role="button" tabindex="0" data-comment-index="'+index+'" aria-label="挑戦'+attempt+'のコメントを表示"><title>コメントあり：挑戦'+attempt+'</title><circle cx="'+mx+'" cy="'+my+'" r="13" fill="#f5c86b" stroke="#142236" stroke-width="2"/><text x="'+mx+'" y="'+(my+4)+'" text-anchor="middle" fill="#142236" font-size="13" font-weight="bold">メ</text></g>'}
+ for(const {r,attempt,index} of visible){if(!r.comment)continue;const mx=x(attempt),my=16;s+='<g class="comment-marker" role="button" tabindex="0" data-comment-index="'+index+'" aria-label="挑戦'+attempt+'のコメントを表示"><title>コメントあり：挑戦'+attempt+'</title><circle cx="'+mx+'" cy="'+my+'" r="13" fill="#f5c86b" stroke="#142236" stroke-width="2"/><text x="'+mx+'" y="'+(my+4)+'" text-anchor="middle" fill="#142236" font-size="13" font-weight="bold">メ</text></g>'}
  s+='</svg>';
  if(!visible.length)s+='<p class="empty" style="padding:8px">指定範囲に記録がありません。</p>';
  el.innerHTML=s;for(const marker of el.querySelectorAll('[data-comment-index]')){const r=records[Number(marker.dataset.commentIndex)];const show=()=>openComment(r.id);marker.onclick=show;marker.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();e.stopPropagation();show()}}}
