@@ -17,14 +17,14 @@
 </style>
 <main>
 <header><div class="brand">▦ CUBE <span>TIME</span></div><div class="tag">ひと回しずつ、自己ベストへ。</div></header>
-<p class="intro">ルービックキューブ 練習ログ</p>
-<section class="panel" aria-label="混ぜ方"><div class="sectionhead"><h2>今回のスクランブル · 3×3</h2><button id="newScramble">別の手順にする</button></div><p id="scramble" role="status" style="font:600 22px/1.9 ui-monospace,monospace;overflow-wrap:anywhere;color:var(--mint)">手順を準備しています…</p>
+<div class="sectionhead"><p class="intro">ルービックキューブ 練習ログ</p><button id="practiceBtn" type="button">白十字練習モードへ</button></div>
+<section class="panel" aria-label="混ぜ方"><div class="sectionhead"><h2>今回のスクランブル · 3×3</h2><button id="scrambleSettingsBtn" type="button">手数：標準</button><button id="newScramble">別の手順にする</button></div><p id="scramble" role="status" style="font:600 22px/1.9 ui-monospace,monospace;overflow-wrap:anywhere;color:var(--mint)">手順を準備しています…</p>
 <div class="cross-actions"><button id="crossBtn" type="button" disabled aria-expanded="false" aria-controls="crossResult">白十字の最短手順を見る</button></div>
 <div id="crossResult" class="cross-answer" hidden role="region" aria-label="白十字の最短手順">
 <div class="cross-answer-head"><span>白十字を作る手順</span><span id="crossSteps" class="cross-steps"></span></div>
 <p id="crossMoves" class="cross-moves" aria-live="polite"></p>
 <p class="cross-note">黄色を上、緑を手前にした向きのまま実行してください。白十字は下面（白面）に作り、側面の色もセンターと一致させます。180°回転も1手として数えた最短手順です。</p>
-</div><details class="hint"><summary>回転記号の読み方・生成方法</summary><p>R＝右、L＝左、U＝上、D＝下、F＝手前、B＝奥の面。各面を正面から見て、文字だけなら時計回り90°、′（例 R'）なら反時計回り90°、2（例 R2）なら180°。キューブ全体の向きを保ち、指定された面だけを回します。</p><p>WCAの記号・ランダム状態方式を参考にした練習用です。cubing.jsで生成し、完成状態と1手で解ける状態を除外します。公式大会用TNoodleによる生成ではありません。</p><a href="https://www.worldcubeassociation.org/regulations/#4b3" target="_blank" rel="noopener" style="color:var(--mint)">WCA公式規則</a> · <a href="https://js.cubing.net/cubing/scramble/" target="_blank" rel="noopener" style="color:var(--mint)">生成ライブラリ</a></details></section>
+</div><details class="hint"><summary>回転記号の読み方・生成方法</summary><p>R＝右、L＝左、U＝上、D＝下、F＝手前、B＝奥の面。各面を正面から見て、文字だけなら時計回り90°、′（例 R'）なら反時計回り90°、2（例 R2）なら180°。キューブ全体の向きを保ち、指定された面だけを回します。</p><p>WCAの記号・ランダム状態方式を参考にした練習用です。標準はcubing.jsで生成し、完成状態と1手で解ける状態を除外します。手数指定では指定数のランダムな回転を生成します。公式大会用TNoodleによる生成ではありません。</p><a href="https://www.worldcubeassociation.org/regulations/#4b3" target="_blank" rel="noopener" style="color:var(--mint)">WCA公式規則</a> · <a href="https://js.cubing.net/cubing/scramble/" target="_blank" rel="noopener" style="color:var(--mint)">生成ライブラリ</a></details></section>
 <section class="panel timer" aria-label="タイマー">
 <div id="status" class="status" role="status">準備ができたらスタート</div>
 <div id="clock" class="digits" aria-label="計測時間">0:00.00</div>
@@ -67,6 +67,15 @@
 <div class="since-item"><span>開始から</span><strong id="recordElapsed">—</strong></div>
 </div></footer>
 </main>
+<dialog id="scrambleSettingsDialog" class="settings-dialog" aria-labelledby="scrambleSettingsTitle">
+<form id="scrambleSettingsForm">
+<div class="dialog-title"><h2 id="scrambleSettingsTitle">スクランブルの手数</h2><button class="dialog-x" type="button" data-close="scrambleSettingsDialog" aria-label="閉じる">×</button></div>
+<div class="settings-group"><label>生成方法<select id="scrambleMode"><option value="standard">標準（これまでと同じ）</option><option value="custom">手数を指定</option></select></label></div>
+<div id="scrambleCountGroup" class="settings-group" hidden><label>手数（1〜100）<input id="scrambleCountInput" type="number" min="1" max="100" step="1" inputmode="numeric" value="20"></label></div>
+<p class="settings-note">標準の手数は毎回変わります。手数指定は練習用のランダム手順です。180°回転も1手です。変更後は完成状態から混ぜ直してください。</p>
+<p id="scrambleSettingsError" class="settings-error" role="alert"></p>
+<div class="dialog-actions"><button type="submit" class="apply-btn">設定を反映</button></div>
+</form></dialog>
 <dialog id="commentDialog" aria-labelledby="commentTitle"><form id="commentForm"><h2 id="commentTitle">記録のコメント</h2><p id="commentRecord"></p><label for="commentInput">コメント（1000文字まで）</label><textarea id="commentInput" maxlength="1000" placeholder="気づいたこと・練習のメモ"></textarea><p id="commentError" role="alert"></p><div class="toolbar"><button id="commentCancel" type="button">閉じる</button><button type="submit" class="start">保存</button></div></form></dialog>
 <script>
 'use strict';
@@ -74,6 +83,20 @@ const KEY='cube-time.records.v1', ACTIVE='cube-time.active.v1', $=id=>document.g
 let records=[],running=false,started=0,frame=0,lock=null,storageBroken=false;
 const selectedRecords=new Set();
 let currentScramble='',scrambleBusy=false; const SCRAMBLE_KEY='cube-time.current-scramble.v1';
+const SCRAMBLE_COUNT_KEY='cube-time.scramble-count.v1';
+let scrambleCount=null;
+try{const n=Number(localStorage.getItem(SCRAMBLE_COUNT_KEY));if(Number.isInteger(n)&&n>=1&&n<=100)scrambleCount=n}catch(e){}
+function updateScrambleSettingLabel(){$('scrambleSettingsBtn').textContent='手数：'+(scrambleCount===null?'標準':scrambleCount+'手')}
+updateScrambleSettingLabel();
+$('scrambleSettingsBtn').onclick=()=>{if(running||scrambleBusy)return;$('scrambleMode').value=scrambleCount===null?'standard':'custom';$('scrambleCountInput').value=scrambleCount||20;$('scrambleCountGroup').hidden=scrambleCount===null;$('scrambleSettingsError').textContent='';showSettings('scrambleSettingsDialog')};
+$('scrambleMode').onchange=()=>{$('scrambleCountGroup').hidden=$('scrambleMode').value==='standard'};
+$('scrambleSettingsForm').onsubmit=e=>{
+ e.preventDefault();if(running||scrambleBusy)return;
+ const count=$('scrambleMode').value==='standard'?null:Number($('scrambleCountInput').value);
+ if(count!==null&&(!Number.isInteger(count)||count<1||count>100)){$('scrambleSettingsError').textContent='1〜100の整数を入力してください。';return}
+ if(count!==scrambleCount){try{localStorage.setItem(SCRAMBLE_COUNT_KEY,String(count===null?0:count))}catch(e){$('scrambleSettingsError').textContent='設定を保存できませんでした。';return}scrambleCount=count;updateScrambleSettingLabel();closeSettings('scrambleSettingsDialog');prepareScramble()}else closeSettings('scrambleSettingsDialog');
+};
+$('practiceBtn').onclick=()=>{if(!running)location.href='./practice.html'};
 let crossRequest=0;
 function resetCross(){
  crossRequest++;
@@ -137,8 +160,8 @@ function save(){if(storageBroken)return false;try{localStorage.setItem(KEY,JSON.
 function active(value){try{if(value)localStorage.setItem(ACTIVE,String(value));else localStorage.removeItem(ACTIVE)}catch(e){}}
 async function wake(){try{if(navigator.wakeLock){const acquired=await navigator.wakeLock.request('screen');if(running)lock=acquired;else await acquired.release()}}catch(e){}}
 function tick(){if(!running)return;$('clock').textContent=format(Date.now()-started);frame=requestAnimationFrame(tick)}
-function start(){if(running||scrambleBusy||!currentScramble)return;$('newScramble').disabled=true;running=true;updateSelection();started=Date.now();active(started);document.body.classList.add('running');$('start').disabled=true;$('stop').disabled=false;$('fail').disabled=false;$('status').textContent='計測中 — あなたのペースで';wake();tick()}
-function finish(result){if(!running)return;const ms=Math.max(0,Date.now()-started);running=false;cancelAnimationFrame(frame);active(null);if(lock){lock.release().catch(()=>{});lock=null}records.push({id:crypto.randomUUID?crypto.randomUUID():String(Date.now())+Math.random(),at:Date.now(),ms,result,scramble:currentScramble});save();$('clock').textContent=format(ms);$('status').textContent=result==='ok'?'完成！タイムを記録しました':'失敗（DNF）として記録しました';document.body.classList.remove('running');$('start').disabled=false;$('stop').disabled=true;$('fail').disabled=true;render();prepareScramble()}
+function start(){if(running||scrambleBusy||!currentScramble)return;$('newScramble').disabled=true;$('scrambleSettingsBtn').disabled=true;$('practiceBtn').disabled=true;running=true;updateSelection();started=Date.now();active(started);document.body.classList.add('running');$('start').disabled=true;$('stop').disabled=false;$('fail').disabled=false;$('status').textContent='計測中 — あなたのペースで';wake();tick()}
+function finish(result){if(!running)return;$('practiceBtn').disabled=false;const ms=Math.max(0,Date.now()-started);running=false;cancelAnimationFrame(frame);active(null);if(lock){lock.release().catch(()=>{});lock=null}records.push({id:crypto.randomUUID?crypto.randomUUID():String(Date.now())+Math.random(),at:Date.now(),ms,result,scramble:currentScramble});save();$('clock').textContent=format(ms);$('status').textContent=result==='ok'?'完成！タイムを記録しました':'失敗（DNF）として記録しました';document.body.classList.remove('running');$('start').disabled=false;$('stop').disabled=true;$('fail').disabled=true;render();prepareScramble()}
 function updateSelection(){const ids=new Set(records.map(r=>r.id));for(const id of selectedRecords)if(!ids.has(id))selectedRecords.delete(id);const n=selectedRecords.size;$('deleteSelected').textContent='選択した記録を削除（'+n+'件）';$('deleteSelected').disabled=running||!n;$('clearSelection').disabled=!n;$('selectAllRecords').checked=records.length>0&&n===records.length;$('selectAllRecords').indeterminate=n>0&&n<records.length;$('selectAllRecords').disabled=running||records.length===0}
 function deleteRecords(ids){if(running){notice('記録の削除は計測を終了してから行ってください。');return}const targets=new Set(ids),removed=records.filter(r=>targets.has(r.id));if(!removed.length)return;if(storageBroken){notice('ブラウザ保存が利用できないため削除できません。先にCSVを保存してください。');return}const dates=removed.map(r=>r.at),first=new Date(Math.min(...dates)).toLocaleString('ja-JP'),last=new Date(Math.max(...dates)).toLocaleString('ja-JP');if(!confirm(removed.length+'件の記録を削除しますか？\n対象日時：'+first+(first!==last?' ～ '+last:'')+'\n削除した記録は元に戻せません。必要なら先にCSVを保存してください。'))return;const before=records;records=records.filter(r=>!targets.has(r.id));if(!save()){records=before;notice('端末に保存できなかったため、削除を取り消しました。');return}for(const id of targets)selectedRecords.delete(id);render();notice(removed.length+'件を削除しました。グラフ・平均・自己ベストも更新しました。')}
 let editingCommentId=null;
@@ -288,9 +311,9 @@ setupMovingAverage();
 setupChartSettings();
 render();
 scheduleRecordStartRefresh();
-try{const old=Number(localStorage.getItem(ACTIVE));if(Number.isFinite(old)&&old>0&&old<=Date.now()&&Date.now()-old<31536000000){started=old;running=true;document.body.classList.add('running');$('start').disabled=true;$('stop').disabled=false;$('fail').disabled=false;$('newScramble').disabled=true;$('status').textContent='中断された計測を復元しました';try{currentScramble=localStorage.getItem(SCRAMBLE_KEY)||''}catch(e){}$('scramble').textContent=currentScramble||'旧バージョンの計測（混ぜ方の記録なし）';$('crossBtn').disabled=!currentScramble;tick()}}catch(e){}
-async function prepareScramble(){if(running||scrambleBusy)return;scrambleBusy=true;currentScramble='';resetCross();$('start').disabled=true;$('newScramble').disabled=true;$('scramble').textContent='新しい手順を生成しています…';try{localStorage.removeItem(SCRAMBLE_KEY)}catch(e){}
-let timeout;try{const value=await Promise.race([import('./scrambler.js').then(m=>m.generateScramble()),new Promise((_,reject)=>{timeout=setTimeout(()=>reject(Error('timeout')),45000)})]);currentScramble=value;$('scramble').textContent=value;try{localStorage.setItem(SCRAMBLE_KEY,value)}catch(e){}$('start').disabled=false;$('crossBtn').disabled=false}catch(e){$('scramble').textContent='手順を生成できませんでした。GitHub Pagesで開き、必要なファイル一式が配置されていることを確認して、再試行してください。';$('newScramble').textContent='生成を再試行'}finally{clearTimeout(timeout);scrambleBusy=false;$('newScramble').disabled=false}}
+try{const old=Number(localStorage.getItem(ACTIVE));if(Number.isFinite(old)&&old>0&&old<=Date.now()&&Date.now()-old<31536000000){started=old;running=true;$('practiceBtn').disabled=true;document.body.classList.add('running');$('start').disabled=true;$('stop').disabled=false;$('fail').disabled=false;$('newScramble').disabled=true;$('scrambleSettingsBtn').disabled=true;$('status').textContent='中断された計測を復元しました';try{currentScramble=localStorage.getItem(SCRAMBLE_KEY)||''}catch(e){}$('scramble').textContent=currentScramble||'旧バージョンの計測（混ぜ方の記録なし）';$('crossBtn').disabled=!currentScramble;tick()}}catch(e){}
+async function prepareScramble(){if(running||scrambleBusy)return;scrambleBusy=true;currentScramble='';resetCross();$('start').disabled=true;$('newScramble').disabled=true;$('scrambleSettingsBtn').disabled=true;$('scramble').textContent='新しい手順を生成しています…';try{localStorage.removeItem(SCRAMBLE_KEY)}catch(e){}
+let timeout;try{const value=await Promise.race([import('./scrambler.js').then(m=>m.generateScramble(scrambleCount)),new Promise((_,reject)=>{timeout=setTimeout(()=>reject(Error('timeout')),45000)})]);currentScramble=value;$('scramble').textContent=value;try{localStorage.setItem(SCRAMBLE_KEY,value)}catch(e){}$('start').disabled=false;$('crossBtn').disabled=false}catch(e){$('scramble').textContent='手順を生成できませんでした。GitHub Pagesで開き、必要なファイル一式が配置されていることを確認して、再試行してください。';$('newScramble').textContent='生成を再試行'}finally{clearTimeout(timeout);scrambleBusy=false;$('newScramble').disabled=false;$('scrambleSettingsBtn').disabled=false}}
 $('newScramble').onclick=()=>{if(!running&&(!currentScramble||confirm('完成状態に戻してから新しい手順で混ぜてください。手順を変更しますか？')))prepareScramble()};
 if(!running)prepareScramble();
 </script>
