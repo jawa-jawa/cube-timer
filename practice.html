@@ -5,7 +5,18 @@
 <meta name="theme-color" content="#101c2d">
 <title>白十字練習｜CUBE TIME</title>
 <style>
-:root{color-scheme:dark;--bg:#0c1421;--panel:#142236;--text:#edf3fb;--muted:#9dadc3;--mint:#86efc5;--line:#2a3a50}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.7 system-ui,sans-serif}main{max-width:1000px;margin:auto;padding:24px 18px 50px}header,.head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}h1{font-size:23px}h2{font-size:17px;margin:0}p{margin:10px 0}.panel{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:22px;margin-top:18px}button,select,input,.back{font:inherit;color:var(--text);background:#1d2f46;border:1px solid #52637a;border-radius:10px;min-height:46px;padding:10px 14px}button,.back{cursor:pointer}button:disabled{opacity:.4}a.back{text-decoration:none}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--mint);outline-offset:3px}.controls{display:flex;gap:12px;align-items:end;flex-wrap:wrap}.controls label{display:flex;flex-direction:column;gap:5px;font-size:13px}input{width:110px}.primary{background:var(--mint);color:#09251c;font-weight:700}.note{font-size:13px;color:var(--muted)}.moves{font:650 clamp(18px,4vw,24px)/1.9 ui-monospace,monospace;overflow-wrap:anywhere;color:var(--mint)}.count{font-size:13px;color:var(--mint)}#error{color:#ffb3b3}#net{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;max-width:660px;margin:20px auto}.face{min-width:0}.face-title{font-size:12px;text-align:center;margin-bottom:4px}.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;background:#050b14;padding:3px;border-radius:5px}.tile{aspect-ratio:1;display:flex;align-items:center;justify-content:center;color:#07111b;font-size:clamp(10px,2.5vw,18px);font-weight:700;border-radius:2px}.face-U{grid-column:2;grid-row:1}.face-L{grid-column:1;grid-row:2}.face-F{grid-column:2;grid-row:2}.face-R{grid-column:3;grid-row:2}.face-B{grid-column:4;grid-row:2}.face-D{grid-column:2;grid-row:3}[hidden]{display:none!important}@media(max-width:500px){.panel{padding:16px}#net{gap:4px}.tiles{gap:2px;padding:2px}}
+:root{color-scheme:dark;--bg:#0c1421;--panel:#142236;--text:#edf3fb;--muted:#9dadc3;--mint:#86efc5;--line:#2a3a50}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.7 system-ui,sans-serif}main{max-width:1000px;margin:auto;padding:24px 18px 50px}header,.head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}h1{font-size:23px}h2{font-size:17px;margin:0}p{margin:10px 0}.panel{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:22px;margin-top:18px}button,select,input,.back{font:inherit;color:var(--text);background:#1d2f46;border:1px solid #52637a;border-radius:10px;min-height:46px;padding:10px 14px}button,.back{cursor:pointer}button:disabled{opacity:.4}a.back{text-decoration:none}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--mint);outline-offset:3px}.controls{display:flex;gap:12px;align-items:end;flex-wrap:wrap}.controls label{display:flex;flex-direction:column;gap:5px;font-size:13px}input{width:110px}.primary{background:var(--mint);color:#09251c;font-weight:700}.note{font-size:13px;color:var(--muted)}.moves{font:650 clamp(18px,4vw,24px)/1.9 ui-monospace,monospace;overflow-wrap:anywhere;color:var(--mint)}.count{font-size:13px;color:var(--mint)}#error{color:#ffb3b3}
+.cube-stage{--cube-size:clamp(130px,42vw,190px);height:350px;position:relative;display:flex;align-items:center;justify-content:center;perspective:850px;touch-action:none;user-select:none;-webkit-user-select:none;cursor:grab;border-radius:16px;background:radial-gradient(ellipse at center,#243b54 0%,#101c2d 70%);margin-top:18px;overflow:hidden}
+.cube-stage.dragging{cursor:grabbing}.cube-stage:focus-visible{outline:3px solid var(--mint);outline-offset:3px}
+.cube{position:relative;width:var(--cube-size);height:var(--cube-size);transform-style:preserve-3d;transform:rotateX(-25deg) rotateY(-35deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;background:#050b14;border:2px solid #050b14;border-radius:5px}
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);gap:4px;padding:4px;width:100%;height:100%}
+.tile{display:flex;align-items:center;justify-content:center;color:#07111b;font-size:clamp(12px,3vw,18px);font-weight:700;border-radius:4px;box-shadow:inset 0 0 0 1px #ffffff33}
+.face-F{transform:translateZ(calc(var(--cube-size)/2))}.face-B{transform:rotateY(180deg) translateZ(calc(var(--cube-size)/2))}
+.face-R{transform:rotateY(90deg) translateZ(calc(var(--cube-size)/2))}.face-L{transform:rotateY(-90deg) translateZ(calc(var(--cube-size)/2))}
+.face-U{transform:rotateX(90deg) translateZ(calc(var(--cube-size)/2))}.face-D{transform:rotateX(-90deg) translateZ(calc(var(--cube-size)/2))}
+.cube-controls{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.cube-controls button{font-size:13px}
+[hidden]{display:none!important}@media(max-width:500px){.panel{padding:16px}.cube-stage{height:310px}.tiles{gap:3px;padding:3px}}
 </style>
 <main>
 <header><h1>白十字練習</h1><a class="back" href="./index.html">タイマーに戻る</a></header>
@@ -20,11 +31,14 @@
 </section>
 <div id="results" hidden>
 <section class="panel"><div class="head"><h2>① 混ぜる手順</h2><span id="scrambleSteps" class="count"></span></div><p id="scramble" class="moves"></p></section>
-<section class="panel"><h2>混ぜた状態の6面</h2><div id="net" aria-label="スクランブル後の6面の展開図"></div><p class="note">前面を基準に開いた展開図です。センターは上＝黄、前＝緑、右＝橙。各マスの文字も色を示します。</p></section>
+<section class="panel"><h2>混ぜた状態のキューブ</h2>
+<div id="cubeStage" class="cube-stage" tabindex="0" role="group" aria-label="回転できるスクランブル後のキューブ" aria-describedby="cubeHelp"><div id="cube" class="cube"></div></div>
+<div class="cube-controls"><button id="cubeReset" type="button">向きを戻す</button><button id="cubeBottom" type="button">下面（白）を見る</button></div>
+<p id="cubeHelp" class="note">ドラッグ・スワイプで回転。キーボードは矢印キーで回転できます。初期位置は上＝黄、前＝緑、右＝橙。表示の向きだけを変え、混ぜた状態は変わりません。</p></section>
 <section class="panel"><div class="head"><h2>② 白十字への最短手順</h2><span id="crossSteps" class="count"></span></div><p id="cross" class="moves"></p><p class="note">側面の色もセンターと一致させます。180°回転も1手として数えます。</p></section>
 <section class="panel"><h2>混ぜた直後 → 6面完成</h2><p id="undoScramble" class="moves"></p><p class="note">①だけを実行した状態から使ってください。</p></section>
 <section class="panel"><h2>白十字完成後 → 6面完成</h2><p id="undoCross" class="moves"></p><p class="note">①→②の順に実行した状態専用です。②を逆に戻し、続けて①を逆に戻します。6面をそろえる最短手順ではありません。</p></section>
 </div>
 </main>
-<script type="module" src="./practice.js"></script>
+<script type="module" src="./practice.js?v=3d1"></script>
 </html>

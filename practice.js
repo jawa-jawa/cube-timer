@@ -1,21 +1,24 @@
 import {generateScramble} from './scrambler.js';
 import {solveWhiteCross} from './cross-solver.js';
 import {faceGrid,faceInfo,inverse,tokens} from './practice-cube.js';
+import {setupCubeViewer} from './cube-viewer.js';
 const $=id=>document.getElementById(id);
 const KEY='cube-time.cross-practice-count.v1';
 let busy=false,request=0;
+const viewer=setupCubeViewer($('cubeStage'),$('cube'),$('cubeReset'),$('cubeBottom'));
 try{const n=Number(localStorage.getItem(KEY));if(Number.isInteger(n)&&n>=1&&n<=100){$('mode').value='custom';$('count').value=n}}catch{}
 function syncMode(){$('countLabel').hidden=$('mode').value==='standard';$('count').disabled=$('mode').value==='standard'}
 syncMode();$('mode').onchange=syncMode;
 function draw(alg){
- const grid=faceGrid(alg),net=$('net');net.replaceChildren();
+ const grid=faceGrid(alg),net=$('cube');net.replaceChildren();
  for(const [face,f] of Object.entries(faceInfo)){
   const box=document.createElement('div');box.className='face face-'+face;
-  const title=document.createElement('div');title.className='face-title';title.textContent=f.name;box.append(title);
+  box.setAttribute('aria-label',f.name);
   const tiles=document.createElement('div');tiles.className='tiles';
   grid[face].forEach((color,i)=>{const tile=document.createElement('span');tile.className='tile';tile.style.background=faceInfo[color].color;tile.textContent=faceInfo[color].letter;tile.setAttribute('aria-label',f.name+' '+(Math.floor(i/3)+1)+'行'+(i%3+1)+'列 '+faceInfo[color].letter);tiles.append(tile)});
   box.append(tiles);net.append(box);
  }
+ viewer.reset();
 }
 async function generate(e){
  e?.preventDefault();if(busy)return;

@@ -1,0 +1,20 @@
+.calendar-toggle,.calendar-nav{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.calendar-toggle button{padding:9px 14px;font-size:13px}
+.calendar-toggle button[aria-pressed="true"]{background:var(--mint);color:#09251c;border-color:var(--mint);font-weight:750}
+.calendar-nav{margin:18px 0 10px}.calendar-nav h3{font-size:19px;min-width:130px;text-align:center;margin:0}
+.calendar-nav button{padding:8px 14px}#calendarSummary{color:var(--muted);font-size:13px;margin:12px 0 18px}
+.calendar-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px}
+.calendar-weekday{text-align:center;font-size:12px;color:var(--muted);padding:4px 0 8px}
+.calendar-day{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-width:0;min-height:62px;padding:6px 1px;background:#0e1b2c;border:1px solid #2a3a50;border-radius:9px;font-size:14px;touch-action:manipulation}
+.calendar-day.has-record{background:#214f46;border-color:#66b99c;color:#ddfff1}
+.calendar-mark{color:var(--mint);font-size:11px;line-height:1.2}
+.calendar-day.is-today .calendar-date{text-decoration:underline;text-underline-offset:4px;font-weight:800}
+.calendar-day[aria-pressed="true"]{outline:2px solid #ffcc80;outline-offset:-2px}
+.calendar-day:focus-visible{outline:3px solid white;outline-offset:1px}
+.calendar-year{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px 18px}
+.calendar-month-title{display:block;width:100%;font-size:14px;font-weight:700;margin:0 0 8px;min-height:36px;padding:4px;background:transparent}
+.calendar-year .calendar-grid{gap:3px}.calendar-year .calendar-day{font-size:11px;min-height:34px;padding:2px 0;border-radius:5px;gap:0}
+.calendar-year .calendar-mark{font-size:7px;line-height:8px}.calendar-year .calendar-weekday{font-size:10px;padding-bottom:4px}
+.calendar-detail{font-size:13px;line-height:1.9;margin:18px 0 0;padding:12px 14px;background:#0e1b2c;border-radius:10px;min-height:48px}
+@media(max-width:680px){.calendar-year{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 12px}.calendar-year .calendar-grid{gap:2px}.calendar-year .calendar-day{min-height:31px}.calendar-single .calendar-day{min-height:52px}.calendar-grid{gap:3px}.calendar-nav{gap:6px}.calendar-nav button{padding:8px 11px}.calendar-nav h3{font-size:17px;min-width:115px}}
+@media(max-width:350px){.calendar-year{grid-template-columns:1fr}}
