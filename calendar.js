@@ -49,6 +49,7 @@
    box.append(grid);return box;
   }
   function render(){
+   root.dataset.view=mode;
    days=aggregate(getRecords());
    $('calendarMonth').setAttribute('aria-pressed',String(mode==='month'));
    $('calendarYear').setAttribute('aria-pressed',String(mode==='year'));

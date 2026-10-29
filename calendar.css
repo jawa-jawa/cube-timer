@@ -11,10 +11,28 @@
 .calendar-day.is-today .calendar-date{text-decoration:underline;text-underline-offset:4px;font-weight:800}
 .calendar-day[aria-pressed="true"]{outline:2px solid #ffcc80;outline-offset:-2px}
 .calendar-day:focus-visible{outline:3px solid white;outline-offset:1px}
-.calendar-year{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px 18px}
-.calendar-month-title{display:block;width:100%;font-size:14px;font-weight:700;margin:0 0 8px;min-height:36px;padding:4px;background:transparent}
-.calendar-year .calendar-grid{gap:3px}.calendar-year .calendar-day{font-size:11px;min-height:34px;padding:2px 0;border-radius:5px;gap:0}
-.calendar-year .calendar-mark{font-size:7px;line-height:8px}.calendar-year .calendar-weekday{font-size:10px;padding-bottom:4px}
+.calendar-year{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px 16px;max-width:760px;margin-inline:auto}
+.calendar-month-title{display:block;width:100%;font-size:13px;font-weight:700;margin:0 0 3px;min-height:28px;padding:2px;background:transparent}
+.calendar-year .calendar-grid{gap:2px;grid-template-rows:16px repeat(6,20px)}.calendar-year .calendar-day{font-size:10px;min-height:0;height:20px;padding:0;border-radius:3px;gap:0;line-height:1}
+.calendar-year .calendar-mark{display:none}.calendar-year .calendar-weekday{font-size:9px;padding:0;line-height:16px}.calendar-year .calendar-day.is-today .calendar-date{text-underline-offset:2px}
 .calendar-detail{font-size:13px;line-height:1.9;margin:18px 0 0;padding:12px 14px;background:#0e1b2c;border-radius:10px;min-height:48px}
-@media(max-width:680px){.calendar-year{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 12px}.calendar-year .calendar-grid{gap:2px}.calendar-year .calendar-day{min-height:31px}.calendar-single .calendar-day{min-height:52px}.calendar-grid{gap:3px}.calendar-nav{gap:6px}.calendar-nav button{padding:8px 11px}.calendar-nav h3{font-size:17px;min-width:115px}}
-@media(max-width:350px){.calendar-year{grid-template-columns:1fr}}
+
+#calendarPanel[data-view="year"] .calendar-nav{margin-top:12px;margin-bottom:6px}
+#calendarPanel[data-view="year"] #calendarSummary{margin:8px 0 12px}
+#calendarPanel[data-view="year"] .calendar-detail{margin-top:12px;padding:8px 10px;min-height:40px}
+@media(max-width:680px){
+ .calendar-year{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px 7px}
+ .calendar-year .calendar-grid{gap:1px;grid-template-rows:12px repeat(6,clamp(11px,2svh,14px))}
+ .calendar-year .calendar-day{height:clamp(11px,2svh,14px);min-height:0;font-size:8px;border-radius:2px;border-width:0}
+ .calendar-year .calendar-weekday{font-size:8px;line-height:12px}
+ .calendar-month-title{min-height:26px;font-size:11px;padding:2px;margin-bottom:2px;border:0}
+ .calendar-single .calendar-day{min-height:52px}
+ .calendar-grid{gap:3px}
+ .calendar-nav{gap:6px}.calendar-nav button{padding:8px 11px}.calendar-nav h3{font-size:17px;min-width:115px}
+ #calendarPanel[data-view="year"]{padding:14px 10px}
+ #calendarPanel[data-view="year"] .sectionhead{gap:8px}
+ #calendarPanel[data-view="year"] h2{font-size:15px}
+ #calendarPanel[data-view="year"] .calendar-toggle{gap:5px}
+ #calendarPanel[data-view="year"] .calendar-toggle button{padding:7px 9px;min-height:36px;font-size:12px}
+ #calendarPanel[data-view="year"] .calendar-detail{font-size:12px;line-height:1.6}
+}
