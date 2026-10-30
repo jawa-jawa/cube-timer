@@ -20,13 +20,16 @@
 </style>
 <main>
 <header><h1>白十字練習</h1><a class="back" href="./index.html">タイマーに戻る</a></header>
-<p class="note">完成状態から、黄色を上・緑を手前にして開始してください。白十字は下面に作ります。</p>
+<p class="note">白十字と側面の色をそろえ、黄色を上・緑を手前にして開始してください。白十字をそろえたら、そのまま次の問題に進めます。</p>
 <section class="panel">
 <form id="generateForm" class="controls">
-<label>混ぜる手数<select id="mode"><option value="standard">標準（これまでと同じ）</option><option value="custom">手数を指定</option></select></label>
-<label id="countLabel" hidden>手数（1〜100）<input id="count" type="number" min="1" max="100" step="1" value="5" inputmode="numeric"></label>
-<button id="generate" class="primary" type="submit">新しい練習を作る</button>
+<label>難易度<select id="difficulty"><option value="3">最短3手</option><option value="4">最短4手</option><option value="5">最短5手</option><option value="6">最短6手以上</option></select></label>
+<label>混ぜる手数<select id="mode"><option value="standard">20手（標準）</option><option value="custom">手数を指定</option></select></label>
+<label id="countLabel" hidden>手数（3〜100）<input id="count" type="number" min="3" max="100" step="1" value="5" inputmode="numeric"></label>
+<button id="generate" class="primary" type="submit">問題を作る</button>
 </form>
+<button id="restartPractice" type="button" style="margin-top:12px">6面完成状態からやり直す</button>
+<p class="note">難易度＝白十字までの最短手数。180°回転も1手です。混ぜる手数は難易度以上に設定してください。</p>
 <p id="status" role="status" class="note"></p><p id="error" role="alert"></p>
 </section>
 <div id="results" hidden>
@@ -34,11 +37,11 @@
 <section class="panel"><h2>混ぜた状態のキューブ</h2>
 <div id="cubeStage" class="cube-stage" tabindex="0" role="group" aria-label="回転できるスクランブル後のキューブ" aria-describedby="cubeHelp"><div id="cube" class="cube"></div></div>
 <div class="cube-controls"><button id="cubeReset" type="button">向きを戻す</button><button id="cubeBottom" type="button">下面（白）を見る</button></div>
-<p id="cubeHelp" class="note">ドラッグ・スワイプで回転。キーボードは矢印キーで回転できます。初期位置は上＝黄、前＝緑、右＝橙。表示の向きだけを変え、混ぜた状態は変わりません。</p></section>
+<p id="cubeHelp" class="note">ドラッグ・スワイプで回転。キーボードは矢印キーで回転できます。初期位置は上＝黄、前＝緑、右＝橙。表示の向きだけを変え、混ぜた状態は変わりません。3D・6面復元を実物と一致させる場合は、最初は6面完成から始め、毎回表示された②を実行してください。</p></section>
 <section class="panel"><div class="head"><h2>② 白十字への最短手順</h2><span id="crossSteps" class="count"></span></div><p id="cross" class="moves"></p><p class="note">側面の色もセンターと一致させます。180°回転も1手として数えます。</p></section>
-<section class="panel"><h2>混ぜた直後 → 6面完成</h2><p id="undoScramble" class="moves"></p><p class="note">①だけを実行した状態から使ってください。</p></section>
-<section class="panel"><h2>白十字完成後 → 6面完成</h2><p id="undoCross" class="moves"></p><p class="note">①→②の順に実行した状態専用です。②を逆に戻し、続けて①を逆に戻します。6面をそろえる最短手順ではありません。</p></section>
+<section class="panel"><h2>混ぜた直後 → 6面完成</h2><p id="undoScramble" class="moves"></p><p class="note">現在の問題の①を実行した直後から使ってください。</p></section>
+<section class="panel"><h2>白十字完成後 → 6面完成</h2><p id="undoCross" class="moves"></p><p class="note">現在の問題の①→②を実行した状態専用です。これまでの手順を逆に戻します。6面をそろえる最短手順ではありません。</p></section>
 </div>
 </main>
-<script type="module" src="./practice.js?v=3d1"></script>
+<script type="module" src="./practice.js?v=difficulty1"></script>
 </html>

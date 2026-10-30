@@ -1,13 +1,21 @@
-import {generateScramble} from './scrambler.js';
+import {generateCrossProblem} from './cross-problems.js';
 import {solveWhiteCross} from './cross-solver.js';
 import {faceGrid,faceInfo,inverse,tokens} from './practice-cube.js';
 import {setupCubeViewer} from './cube-viewer.js';
 const $=id=>document.getElementById(id);
 const KEY='cube-time.cross-practice-count.v1';
-let busy=false,request=0;
+let busy=false,current=null;
+const DIFFICULTY_KEY='cube-time.cross-difficulty.v1';
+try{const d=Number(localStorage.getItem(DIFFICULTY_KEY));if([3,4,5,6].includes(d))$('difficulty').value=String(d)}catch{}
 const viewer=setupCubeViewer($('cubeStage'),$('cube'),$('cubeReset'),$('cubeBottom'));
 try{const n=Number(localStorage.getItem(KEY));if(Number.isInteger(n)&&n>=1&&n<=100){$('mode').value='custom';$('count').value=n}}catch{}
-function syncMode(){$('countLabel').hidden=$('mode').value==='standard';$('count').disabled=$('mode').value==='standard'}
+function syncMode(){
+ const minimum=Number($('difficulty').value);
+ $('countLabel').hidden=$('mode').value==='standard';$('count').disabled=$('mode').value==='standard';
+ $('count').min=String(minimum);
+}
+$('difficulty').onchange=()=>{if(Number($('count').value)<Number($('difficulty').value))$('count').value=$('difficulty').value;syncMode()};
+if(Number($('count').value)<Number($('difficulty').value))$('count').value=$('difficulty').value;
 syncMode();$('mode').onchange=syncMode;
 function draw(alg){
  const grid=faceGrid(alg),net=$('cube');net.replaceChildren();
@@ -20,28 +28,33 @@ function draw(alg){
  }
  viewer.reset();
 }
-async function generate(e){
+async function generate(e,restart=false){
  e?.preventDefault();if(busy)return;
- const count=$('mode').value==='standard'?null:Number($('count').value);
- if(count!==null&&(!Number.isInteger(count)||count<1||count>100)){$('error').textContent='手数は1〜100の整数で入力してください。';return}
- busy=true;const id=++request;
- $('generate').disabled=true;$('mode').disabled=true;$('count').disabled=true;
- $('results').hidden=true;$('error').textContent='';$('status').textContent='手順と白十字の最短解を準備しています…';
- let timeout;
+ const difficulty=Number($('difficulty').value),count=$('mode').value==='standard'?20:Number($('count').value);
+ if(!Number.isInteger(count)||count<difficulty||count>100){$('error').textContent='この難易度では混ぜる手数を'+difficulty+'〜100手にしてください。';return}
+ if(restart&&!confirm('実物を6面完成状態に戻してから始めてください。新しく問題を作りますか？'))return;
+ const base=restart||!current?'':current.afterCross;
+ busy=true;
+ for(const id of ['generate','mode','count','difficulty','restartPractice'])$(id).disabled=true;
+ $('error').textContent='';$('status').textContent='選んだ難易度の問題を生成しています…';
  try{
-  const scramble=await Promise.race([generateScramble(count),new Promise((_,reject)=>{timeout=setTimeout(()=>reject(Error('生成が時間内に完了しませんでした。再試行してください。')),45000)})]);
-  await new Promise(resolve=>setTimeout(resolve,0));
-  if(id!==request)return;
-  const cross=solveWhiteCross(scramble);
-  $('scramble').textContent=scramble;$('scrambleSteps').textContent=tokens(scramble).length+'手';
+  const {scramble,cross}=await generateCrossProblem(count,difficulty);
+  const mixed=[base,scramble].filter(Boolean).join(' ');
+  const afterCross=[mixed,...cross.moves].join(' ');
+  // Cross state must remain solved at every question boundary.
+  if(solveWhiteCross(afterCross).steps!==0)throw Error('白十字の状態を確認できませんでした。');
+  current={mixed,afterCross};
+  $('scramble').textContent=scramble;$('scrambleSteps').textContent=tokens(scramble).length+'手 ／ 難易度：最短'+cross.steps+'手';
   $('cross').textContent=cross.notation;$('crossSteps').textContent=cross.steps+'手';
-  $('undoScramble').textContent=inverse(scramble);
-  $('undoCross').textContent=inverse([scramble,...cross.moves].join(' '))||'すでに完成しています';
-  draw(scramble);$('results').hidden=false;
-  $('status').textContent='完成状態から①を実行してください。';
-  try{localStorage.setItem(KEY,String(count??0))}catch{$('status').textContent+=' 手数設定は保存できませんでした。'}
- }catch(error){$('error').textContent=error.message||'手順を生成できませんでした。';$('status').textContent='再試行してください。'}
- finally{clearTimeout(timeout);busy=false;$('generate').disabled=false;$('mode').disabled=false;syncMode()}
+  $('undoScramble').textContent=inverse(mixed);
+  $('undoCross').textContent=inverse(afterCross)||'すでに完成しています';
+  draw(mixed);$('results').hidden=false;
+  $('generate').textContent='白十字をそろえて次の問題';
+  $('status').textContent=(base?'前の問題の②で白十字をそろえた状態':'白十字がそろった状態（3D・6面復元を使う場合は6面完成状態）')+'から、今回の①を実行してください。';
+  try{localStorage.setItem(KEY,String($('mode').value==='standard'?0:count));localStorage.setItem(DIFFICULTY_KEY,String(difficulty))}catch{$('status').textContent+=' 設定は保存できませんでした。'}
+ }catch(error){$('error').textContent=error.message||'問題を生成できませんでした。';$('status').textContent='現在の問題を残しています。条件を確認して再試行してください。'}
+ finally{busy=false;for(const id of ['generate','mode','count','difficulty','restartPractice'])$(id).disabled=false;syncMode()}
 }
 $('generateForm').onsubmit=generate;
+$('restartPractice').onclick=e=>generate(e,true);
 generate();
