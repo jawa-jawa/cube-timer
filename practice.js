@@ -1,6 +1,6 @@
 import {generateCrossProblem} from './cross-problems.js';
 import {solveWhiteCross} from './cross-solver.js';
-import {faceGrid,faceInfo,inverse,tokens} from './practice-cube.js?v=1.1';
+import {faceGrid,faceInfo,tokens} from './practice-cube.js?v=1.1';
 import {setupCubeViewer} from './cube-viewer.js';
 const $=id=>document.getElementById(id);
 const KEY='cube-time.cross-practice-count.v1';
@@ -46,11 +46,9 @@ async function generate(e,restart=false){
   current={mixed,afterCross};
   $('scramble').textContent=scramble;$('scrambleSteps').textContent=tokens(scramble).length+'手 ／ 難易度：最短'+cross.steps+'手';
   $('cross').textContent=cross.notation;$('crossSteps').textContent=cross.steps+'手';
-  $('undoScramble').textContent=inverse(mixed);
-  $('undoCross').textContent=inverse(afterCross)||'すでに完成しています';
   draw(mixed);$('results').hidden=false;
   $('generate').textContent='白十字をそろえて次の問題';
-  $('status').textContent=(base?'前の問題の②で白十字をそろえた状態':'白十字がそろった状態（3D・6面復元を使う場合は6面完成状態）')+'から、今回の①を実行してください。';
+  $('status').textContent=(base?'前の問題の②で白十字をそろえた状態':'白十字がそろった状態')+'から、今回の①を実行してください。';
   try{localStorage.setItem(KEY,String($('mode').value==='standard'?0:count));localStorage.setItem(DIFFICULTY_KEY,String(difficulty))}catch{$('status').textContent+=' 設定は保存できませんでした。'}
  }catch(error){$('error').textContent=error.message||'問題を生成できませんでした。';$('status').textContent='現在の問題を残しています。条件を確認して再試行してください。'}
  finally{busy=false;for(const id of ['generate','mode','count','difficulty','restartPractice'])$(id).disabled=false;syncMode()}
