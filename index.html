@@ -16,6 +16,7 @@
 .cross-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:8px 0 0}.cross-actions button{font-size:13px;min-height:44px}.cross-answer{margin-top:14px;padding:16px 18px;border:1px solid #466b68;border-radius:14px;background:#102a32}.cross-answer[hidden]{display:none}.cross-answer-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;font-weight:750;font-size:14px}.cross-steps{color:var(--mint);font-size:13px}.cross-moves{font:700 clamp(20px,4vw,28px)/1.8 ui-monospace,SFMono-Regular,Consolas,monospace;color:var(--mint);margin:10px 0 8px;overflow-wrap:anywhere}.cross-note{font-size:12px;line-height:1.8;color:var(--muted);margin:6px 0 0}
 .comment-button{font-size:12px;padding:8px 10px;margin:3px;white-space:nowrap}.comment-preview{max-width:220px;white-space:pre-wrap;overflow-wrap:anywhere;font-size:12px;color:var(--muted);margin:6px 0}.comment-marker{cursor:pointer;outline:none}.comment-marker:focus circle{stroke:white;stroke-width:3}#commentInput{width:100%;min-height:140px;padding:12px;font:16px/1.6 system-ui;background:var(--bg);color:var(--text);border:1px solid var(--line);border-radius:10px;resize:vertical}#commentDialog{max-width:480px;width:92vw}#commentRecord{font-size:13px;color:var(--muted)}
 .buttons .fail{min-height:44px;padding:8px 4px;font-size:13px}.buttons .start,.buttons .stop{font-size:18px}
+.app-version{color:var(--muted);font-size:12px;text-align:right;margin:20px 0 0;letter-spacing:.04em}
 </style>
 <main>
 <header><div class="brand">▦ CUBE <span>TIME</span></div><div class="tag">ひと回しずつ、自己ベストへ。</div></header>
@@ -73,7 +74,7 @@
 <div class="practice-since" aria-label="記録開始日と経過期間">
 <div class="since-item"><span>記録開始日</span><strong id="recordStartDate">—</strong></div>
 <div class="since-item"><span>開始から</span><strong id="recordElapsed">—</strong></div>
-</div></footer>
+</div><p class="app-version" aria-label="ソフトのバージョン">CUBE TIME · v1.0</p></footer>
 </main>
 <dialog id="scrambleSettingsDialog" class="settings-dialog" aria-labelledby="scrambleSettingsTitle">
 <form id="scrambleSettingsForm">

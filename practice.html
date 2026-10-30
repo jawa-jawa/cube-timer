@@ -17,6 +17,7 @@
 .face-U{transform:rotateX(90deg) translateZ(calc(var(--cube-size)/2))}.face-D{transform:rotateX(-90deg) translateZ(calc(var(--cube-size)/2))}
 .cube-controls{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.cube-controls button{font-size:13px}
 [hidden]{display:none!important}@media(max-width:500px){.panel{padding:16px}.cube-stage{height:310px}.tiles{gap:3px;padding:3px}}
+.app-version{color:var(--muted);font-size:12px;text-align:right;margin:20px 0 0;letter-spacing:.04em}
 </style>
 <main>
 <header><h1>白十字練習</h1><a class="back" href="./index.html">タイマーに戻る</a></header>
@@ -42,6 +43,7 @@
 <section class="panel"><h2>混ぜた直後 → 6面完成</h2><p id="undoScramble" class="moves"></p><p class="note">現在の問題の①を実行した直後から使ってください。</p></section>
 <section class="panel"><h2>白十字完成後 → 6面完成</h2><p id="undoCross" class="moves"></p><p class="note">現在の問題の①→②を実行した状態専用です。これまでの手順を逆に戻します。6面をそろえる最短手順ではありません。</p></section>
 </div>
+<footer><p class="app-version" aria-label="ソフトのバージョン">CUBE TIME · v1.0</p></footer>
 </main>
-<script type="module" src="./practice.js?v=difficulty1"></script>
+<script type="module" src="./practice.js?v=color-only1"></script>
 </html>

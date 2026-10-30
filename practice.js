@@ -23,7 +23,7 @@ function draw(alg){
   const box=document.createElement('div');box.className='face face-'+face;
   box.setAttribute('aria-label',f.name);
   const tiles=document.createElement('div');tiles.className='tiles';
-  grid[face].forEach((color,i)=>{const tile=document.createElement('span');tile.className='tile';tile.style.background=faceInfo[color].color;tile.textContent=faceInfo[color].letter;tile.setAttribute('aria-label',f.name+' '+(Math.floor(i/3)+1)+'行'+(i%3+1)+'列 '+faceInfo[color].letter);tiles.append(tile)});
+  grid[face].forEach((color,i)=>{const tile=document.createElement('span');tile.className='tile';tile.style.background=faceInfo[color].color;tile.setAttribute('aria-label',f.name+' '+(Math.floor(i/3)+1)+'行'+(i%3+1)+'列 '+faceInfo[color].letter);tiles.append(tile)});
   box.append(tiles);net.append(box);
  }
  viewer.reset();
