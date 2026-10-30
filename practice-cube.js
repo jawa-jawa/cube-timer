@@ -26,13 +26,17 @@ export function stickersAfter(alg){
  }
  return stickers;
 }
-export function faceGrid(alg){
+export function faceGrid(alg,crossOnly=false){
  const stickers=stickersAfter(alg),result={};
+ const isEdge=s=>s.p.reduce((sum,n)=>sum+Math.abs(n),0)===2;
+ const whiteEdges=new Set(stickers.filter(s=>s.face==='D'&&isEdge(s)).map(s=>s.p.join(',')));
  for(const [face,f] of Object.entries(faceInfo)){
   const grid=Array(9);
   for(const s of stickers)if(s.n.every((n,i)=>n===f.n[i])){
    const dot=v=>s.p.reduce((sum,p,i)=>sum+p*v[i],0);
-   grid[(dot(f.down)+1)*3+dot(f.right)+1]=s.face;
+   const center=s.p.reduce((sum,n)=>sum+Math.abs(n),0)===1;
+   const visible=!crossOnly||center||whiteEdges.has(s.p.join(','));
+   grid[(dot(f.down)+1)*3+dot(f.right)+1]=visible?s.face:null;
   }
   result[face]=grid;
  }
