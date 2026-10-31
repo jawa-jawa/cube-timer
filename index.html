@@ -44,7 +44,7 @@
 <select id="range" aria-label="グラフの表示範囲"><option value="30">直近30回</option><option value="100">直近100回</option><option value="0">全記録</option><option value="custom" hidden>指定範囲</option></select>
 <button id="chartSettingsBtn" type="button">グラフ設定</button><button id="chartFullscreenBtn" type="button" aria-pressed="false">全画面表示</button>
 </div></div>
-<p class="legend"><span>● 成功タイム</span>　× 失敗（DNF）　縦軸：秒 / 横軸：挑戦番号</p>
+<p class="legend"><span>━ 成功タイム</span>　× 失敗（DNF）　縦軸：秒 / 横軸：挑戦番号</p>
 <div class="ma-head"><span class="ma-display"><span class="ma-dot" aria-hidden="true"></span>移動平均：<strong id="maCurrent" aria-live="polite">10回</strong><strong id="maLatest" aria-live="polite" aria-label="最新の移動平均タイム">—</strong></span><button id="maSettingsBtn" type="button">数値設定</button></div>
 <div id="chart" aria-live="off"></div>
 </section>
@@ -75,7 +75,7 @@
 <div class="practice-since" aria-label="記録開始日と経過期間">
 <div class="since-item"><span>記録開始日</span><strong id="recordStartDate">—</strong></div>
 <div class="since-item"><span>開始から</span><strong id="recordElapsed">—</strong></div>
-</div><p class="app-version" aria-label="ソフトのバージョン">CUBE TIME · v1.3</p></footer>
+</div><p class="app-version" aria-label="ソフトのバージョン">CUBE TIME · v1.5</p></footer>
 </main>
 <dialog id="scrambleSettingsDialog" class="settings-dialog" aria-labelledby="scrambleSettingsTitle">
 <form id="scrambleSettingsForm">
@@ -285,12 +285,12 @@ function chart(){
  for(const p of visible){const {r,attempt}=p,px=x(attempt);
   if(r.result==='dnf'){s+='<text x="'+px+'" y="'+(T+18)+'" text-anchor="middle" fill="#ffb3b3" font-size="20">×<title>挑戦'+attempt+'：DNF</title></text>';prev=null}
   else{const py=y(r.ms/1000);if(prev)s+='<line x1="'+prev[0]+'" y1="'+prev[1]+'" x2="'+px+'" y2="'+py+'" stroke="#86efc5" stroke-width="2"/>';
-   s+='<circle cx="'+px+'" cy="'+py+'" r="4" fill="#86efc5"><title>挑戦'+attempt+'：'+format(r.ms)+'</title></circle>';prev=[px,py]}}
+   prev=[px,py]}}
  const points=average.points.filter(p=>p.index+1>=xMin&&p.index+1<=xMax);
  if(points.length){
   const coords=points.map(p=>x(p.index+1)+','+y(p.ms/1000)).join(' ');
   s+='<polyline data-ma="single" points="'+coords+'" fill="none" stroke="'+MA_COLOR+'" stroke-width="3" stroke-linejoin="round"><title>'+maWindow+'回移動平均</title></polyline>';
-  for(const p of points)s+='<circle cx="'+x(p.index+1)+'" cy="'+y(p.ms/1000)+'" r="3" fill="'+MA_COLOR+'"><title>挑戦'+(p.index+1)+'：'+maWindow+'回移動平均 '+format(p.ms)+'</title></circle>';
+
  }
  s+='</g>';
  for(const {r,attempt,index} of visible){if(!r.comment)continue;const mx=x(attempt),my=16;s+='<g class="comment-marker" role="button" tabindex="0" data-comment-index="'+index+'" aria-label="挑戦'+attempt+'のコメントを表示"><title>コメントあり：挑戦'+attempt+'</title><circle cx="'+mx+'" cy="'+my+'" r="13" fill="#f5c86b" stroke="#142236" stroke-width="2"/><text x="'+mx+'" y="'+(my+4)+'" text-anchor="middle" fill="#142236" font-size="13" font-weight="bold">メ</text></g>'}

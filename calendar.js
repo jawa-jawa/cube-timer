@@ -13,14 +13,14 @@
   }
   return days;
  }
- function mount(root,getRecords,format){
+ function mount(root,getRecords,format,options={}){
   const $=id=>root.querySelector('#'+id),today=new Date();
   let year=today.getFullYear(),month=today.getMonth(),mode='month',selected=key(today),days=new Map();
-  try{if(localStorage.getItem('cube-time.calendar-view.v1')==='year')mode='year'}catch{}
+  try{if(localStorage.getItem(options.viewKey||'cube-time.calendar-view.v1')==='year')mode='year'}catch{}
   function node(tag,cls,text){const el=document.createElement(tag);el.className=cls;if(text!==undefined)el.textContent=text;return el}
   function detail(){
    const v=days.get(selected),d=new Date(selected+'T12:00:00');
-   $('calendarDetail').textContent=d.toLocaleDateString('ja-JP',{year:'numeric',month:'long',day:'numeric'})+'：'+(v?v.total+'回（成功 '+v.ok+'回・失敗 '+v.dnf+'回）'+(v.best===null?'':' ／ ベスト '+format(v.best)):'記録なし');
+   $('calendarDetail').textContent=d.toLocaleDateString('ja-JP',{year:'numeric',month:'long',day:'numeric'})+'：'+(options.detail?options.detail(v,selected):(v?v.total+'回（成功 '+v.ok+'回・失敗 '+v.dnf+'回）'+(v.best===null?'':' ／ ベスト '+format(v.best)):'記録なし'));
   }
   function makeMonth(m,compact){
    const box=node('div','calendar-month');
@@ -65,7 +65,7 @@
    $('calendarSummary').textContent='記録した日：'+active+'日 ／ 挑戦：'+total+'回';
    detail();
   }
-  function setMode(value){mode=value;try{localStorage.setItem('cube-time.calendar-view.v1',mode)}catch{}render()}
+  function setMode(value){mode=value;try{localStorage.setItem(options.viewKey||'cube-time.calendar-view.v1',mode)}catch{}render()}
   function shift(step){
    if(mode==='year')year=Math.min(9999,Math.max(1,year+step));
    else{const d=monthDate(year,month+step);if(d.getFullYear()<1||d.getFullYear()>9999)return;year=d.getFullYear();month=d.getMonth()}

@@ -4,6 +4,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#101c2d">
 <title>白十字練習｜CUBE TIME</title>
+<link rel="stylesheet" href="./calendar.css?v=1.5">
 <style>
 :root{color-scheme:dark;--bg:#0c1421;--panel:#142236;--text:#edf3fb;--muted:#9dadc3;--mint:#86efc5;--line:#2a3a50}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.7 system-ui,sans-serif}main{max-width:1000px;margin:auto;padding:24px 18px 50px}header,.head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}h1{font-size:23px}h2{font-size:17px;margin:0}p{margin:10px 0}.panel{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:22px;margin-top:18px}button,select,input,.back{font:inherit;color:var(--text);background:#1d2f46;border:1px solid #52637a;border-radius:10px;min-height:46px;padding:10px 14px}button,.back{cursor:pointer}button:disabled{opacity:.4}a.back{text-decoration:none}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--mint);outline-offset:3px}.controls{display:flex;gap:12px;align-items:end;flex-wrap:wrap}.controls label{display:flex;flex-direction:column;gap:5px;font-size:13px}input{width:110px}.primary{background:var(--mint);color:#09251c;font-weight:700}.note{font-size:13px;color:var(--muted)}.moves{font:650 clamp(18px,4vw,24px)/1.9 ui-monospace,monospace;overflow-wrap:anywhere;color:var(--mint)}.count{font-size:13px;color:var(--mint)}#error{color:#ffb3b3}
 .cube-stage{--cube-size:clamp(130px,42vw,190px);height:350px;position:relative;display:flex;align-items:center;justify-content:center;perspective:850px;touch-action:none;user-select:none;-webkit-user-select:none;cursor:grab;border-radius:16px;background:radial-gradient(ellipse at center,#243b54 0%,#101c2d 70%);margin-top:18px;overflow:hidden}
@@ -19,6 +20,7 @@
 [hidden]{display:none!important}@media(max-width:500px){.panel{padding:16px}.cube-stage{height:310px}.tiles{gap:3px;padding:3px}}
 .app-version{color:var(--muted);font-size:12px;text-align:right;margin:20px 0 0;letter-spacing:.04em}
 .tile-masked{background:#101722;box-shadow:none}
+.practice-totals{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:14px}.practice-total{background:#0e1b2c;border-radius:12px;padding:12px 6px;text-align:center}.practice-total span{display:block;color:var(--muted);font-size:12px}.practice-total strong{font-size:23px;color:var(--mint)}.completion-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:18px}#completed{min-width:140px}#completionNotice{font-size:13px;color:var(--mint)}#recordError{color:#ffb3b3;font-size:13px}.sectionhead{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
 </style>
 <main>
 <header><h1>白十字練習</h1><a class="back" href="./index.html">タイマーに戻る</a></header>
@@ -40,9 +42,23 @@
 <div id="cubeStage" class="cube-stage" tabindex="0" role="group" aria-label="回転できるスクランブル後のキューブ" aria-describedby="cubeHelp"><div id="cube" class="cube"></div></div>
 <div class="cube-controls"><button id="cubeReset" type="button">向きを戻す</button><button id="cubeBottom" type="button">下面（白）を見る</button></div>
 <p id="cubeHelp" class="note">センターと白を含むエッジのみ色を表示。ドラッグ・スワイプで回転。キーボードは矢印キーで回転できます。初期位置は上＝黄、前＝緑、右＝橙。表示の向きだけを変え、混ぜた状態は変わりません。</p></section>
+<div class="completion-row"><button id="completed" type="button" class="primary" disabled>出来た</button><span id="completionNotice" role="status"></span></div>
 <section class="panel"><div class="head"><h2>② 白十字への最短手順</h2><span id="crossSteps" class="count"></span></div><p id="cross" class="moves"></p><p class="note">側面の色もセンターと一致させます。180°回転も1手として数えます。</p></section>
 </div>
-<footer><p class="app-version" aria-label="ソフトのバージョン">CUBE TIME · v1.3</p></footer>
+<section class="panel" aria-labelledby="practiceTotalsTitle"><h2 id="practiceTotalsTitle">難易度別の累計</h2><div class="practice-totals">
+<div class="practice-total"><span>3手</span><strong id="total3">0回</strong></div>
+<div class="practice-total"><span>4手</span><strong id="total4">0回</strong></div>
+<div class="practice-total"><span>5手</span><strong id="total5">0回</strong></div>
+<div class="practice-total"><span>6手以上</span><strong id="total6">0回</strong></div>
+</div><p id="recordError" role="alert"></p><p class="note">「出来た」を押した記録をこの端末に保存します。</p></section>
+<section id="calendarPanel" class="panel" aria-labelledby="calendarTitle">
+<div class="sectionhead"><h2 id="calendarTitle">白十字練習カレンダー</h2><div class="calendar-toggle" aria-label="カレンダーの表示切替"><button id="calendarMonth" type="button" aria-pressed="true">月表示</button><button id="calendarYear" type="button" aria-pressed="false">年間表示</button></div></div>
+<div class="calendar-nav"><button id="calendarPrev" type="button" aria-label="前の月">‹</button><h3 id="calendarCaption" aria-live="polite"></h3><button id="calendarNext" type="button" aria-label="次の月">›</button><button id="calendarToday" type="button">今日</button></div>
+<p id="calendarSummary"></p><div id="calendarBody"></div>
+<p id="calendarDetail" class="calendar-detail" role="status"></p>
+</section>
+<footer><p class="app-version" aria-label="ソフトのバージョン">CUBE TIME · v1.5</p></footer>
 </main>
-<script type="module" src="./practice.js?v=1.2"></script>
+<script src="./calendar.js?v=1.5"></script>
+<script type="module" src="./practice.js?v=1.5"></script>
 </html>
