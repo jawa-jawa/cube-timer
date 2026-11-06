@@ -23,7 +23,7 @@
 .ma-head{flex-wrap:wrap}#maLatest{white-space:nowrap}
 </style>
 <main>
-<header><div class="brand-lockup"><div class="brand">CUBE <span>TIME</span></div><span class="top-version" aria-label="ソフトのバージョン">v1.9</span></div><label class="mode-picker">モード<select id="modeSelect" aria-label="モード選択"><option value="index.html" selected>タイム計測</option><option value="practice.html">白十字練習</option><option value="quiz.html">配色クイズ</option></select></label></header>
+<header><div class="brand-lockup"><div class="brand">CUBE <span>TIME</span></div><span class="top-version" aria-label="ソフトのバージョン">v2.0</span></div><label class="mode-picker">モード<select id="modeSelect" aria-label="モード選択"><option value="index.html" selected>タイム計測</option><option value="practice.html">白十字練習</option><option value="quiz.html">配色クイズ</option></select></label></header>
 <div class="sectionhead"><p class="intro">ルービックキューブ 練習ログ</p></div>
 <section class="panel" aria-label="混ぜ方"><div class="sectionhead"><h2>今回のスクランブル · 3×3</h2><button id="scrambleSettingsBtn" type="button">手数：標準</button><button id="newScramble">別の手順にする</button></div><p id="scramble" role="status" style="font:600 22px/1.9 ui-monospace,monospace;overflow-wrap:anywhere;color:var(--mint)">手順を準備しています…</p>
 <div class="cross-actions"><button id="crossBtn" type="button" disabled aria-expanded="false" aria-controls="crossResult">白十字の最短手順を見る</button></div>
@@ -338,7 +338,7 @@ if(!running)prepareScramble();
 const select=document.getElementById('modeSelect');
 const page=location.pathname.split('/').pop()||'index.html';
 select.value=['index.html','practice.html','quiz.html'].includes(page)?page:'index.html';
-select.addEventListener('change',()=>{if(document.body.classList.contains('running')){select.value=page;return;}location.href='./'+select.value+'?v=1.9';});
+select.addEventListener('change',()=>{if(document.body.classList.contains('running')){select.value=page;return;}location.href='./'+select.value+'?v=2.0';});
 function sync(){select.disabled=document.body.classList.contains('running');}
 new MutationObserver(sync).observe(document.body,{attributes:true,attributeFilter:['class']});sync();
 

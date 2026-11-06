@@ -5,22 +5,27 @@
 </style>
 <style>
 :root{color-scheme:dark}*{box-sizing:border-box}body{margin:0;background:#0c1421;color:#edf3fb;font:16px/1.6 system-ui,sans-serif}main{max-width:620px;margin:auto;padding:22px 16px 40px}header{display:flex;align-items:center;justify-content:space-between}h1{font-size:22px;margin:0}h2{font-size:17px;margin:0 0 12px}.panel{margin-top:18px;padding:20px;background:#142236;border:1px solid #2a3a50;border-radius:20px}.top{text-align:center;color:#f4d83b;font-weight:700}.score{text-align:center;color:#9dadc3;font-size:14px;margin:14px 0}.slots{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;text-align:center}.slot-label{font-size:13px;color:#9dadc3;margin-top:6px}.tile{width:100%;aspect-ratio:1;border-radius:14px;border:3px solid transparent;background:#f4f5f7;color:#101722;display:flex;align-items:center;justify-content:center;font-size:clamp(15px,4vw,22px);font-weight:750;padding:4px;min-height:64px}.tile.active{outline:3px solid #86efc5;outline-offset:4px}.tile.wrong{border:3px dashed #9c182c}.tile.correct{border-color:#86efc5}button{font:inherit;cursor:pointer;touch-action:manipulation}button:focus-visible{outline:3px solid #86efc5;outline-offset:3px}button:disabled{cursor:default}.choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.choice{display:flex;align-items:center;justify-content:center;gap:9px;background:#1d2f46;color:#edf3fb;border:1px solid #52637a;border-radius:12px;min-height:58px;padding:10px 4px}.swatch{width:22px;height:22px;border-radius:50%;flex-shrink:0}.primary{display:block;width:100%;background:#86efc5;color:#09251c;border:0;border-radius:12px;padding:14px;font-weight:750;min-height:50px;margin-top:18px}.primary:disabled{opacity:.35}.note{font-size:13px;color:#9dadc3;text-align:center}.feedback{text-align:center;font-weight:700;color:#86efc5}.feedback.miss{color:#ffb3b3}.answer-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.answer-row .tile{font-size:15px}footer{text-align:right;color:#9dadc3;font-size:12px;margin-top:22px}[hidden]{display:none!important}
-</style><main><header><div class="brand-lockup"><div class="brand">CUBE <span>TIME</span></div><span class="top-version" aria-label="ソフトのバージョン">v1.9</span></div><label class="mode-picker">モード<select id="modeSelect" aria-label="モード選択"><option value="index.html">タイム計測</option><option value="practice.html">白十字練習</option><option value="quiz.html" selected>配色クイズ</option></select></label></header><h1 class="page-title">配色クイズ</h1>
-<p class="top">🟨 黄色を上に固定</p><p id="score" class="score">正解 0 / 0問</p>
+.quiz-stats{display:flex;justify-content:space-between;gap:8px;font-size:14px;font-variant-numeric:tabular-nums;margin-top:16px}.slots{max-width:320px;margin:auto}.feedback{min-height:2em;margin:12px 0;overflow-wrap:anywhere}.choice:disabled{opacity:.65}.choice[aria-pressed="true"]{outline:2px solid #86efc5}.final-stats{font-size:20px;color:#86efc5;font-weight:700}.mistake{border-top:1px solid #2a3a50;padding:16px 0}.mistake p{margin:8px 0}.review-pair{display:flex;gap:8px}.review-tile{width:90px;min-height:64px;display:flex;align-items:center;justify-content:center;border-radius:10px;color:#101722;font-weight:700}.review-answer{display:flex;align-items:center;gap:8px;font-size:14px}.review-answer .swatch{display:inline-block}.wrong-text{color:#ffb3b3}
+</style><main><header><div class="brand-lockup"><div class="brand">CUBE <span>TIME</span></div><span class="top-version" aria-label="ソフトのバージョン">v2.0</span></div><label class="mode-picker">モード<select id="modeSelect" aria-label="モード選択"><option value="index.html">タイム計測</option><option value="practice.html">白十字練習</option><option value="quiz.html" selected>配色クイズ</option></select></label></header><h1 class="page-title">配色クイズ</h1>
+<p class="top">🟨 黄色を上に固定</p>
+<section id="intro" class="panel"><h2>10問チャレンジ</h2><p class="note">開始から10問目の答え合わせまでを計測します。正解を確認する時間も含みます。</p><button id="startSet" class="primary">スタート</button></section>
+<div id="play" hidden>
+<div class="quiz-stats"><span id="progress">1 / 10問</span><span id="timer">0.00秒</span><span id="score">正解率 —</span></div>
 <section class="panel" aria-label="配色の問題"><div class="slots">
 <div id="targetWrap"><div id="target" class="tile" role="img" aria-label="未選択">？</div><div id="targetLabel" class="slot-label"></div></div>
 <div style="order:1"><div id="front" class="tile"></div><div class="slot-label">手前</div></div>
 </div></section>
 <section id="picker" class="panel"><h2>空欄の色を選択</h2><div id="choices" class="choices"></div></section>
-<button id="check" class="primary" disabled>答え合わせ</button>
-<section id="result" class="panel" hidden><p id="feedback" class="feedback" role="status"></p><h2>正しい配色</h2><div id="answer" class="answer-row"></div></section>
-<button id="next" class="primary" hidden>次の問題</button>
+<button id="action" class="primary" disabled>答え合わせ</button>
+<p id="feedback" class="feedback" role="status"></p>
+</div>
+<section id="summary" class="panel" hidden aria-labelledby="summaryTitle"><h2 id="summaryTitle">10問の結果</h2><p id="finalStats" class="final-stats"></p><h2>間違えた問題</h2><div id="mistakes"></div><button id="retry" class="primary">もう一度10問</button></section>
 </main><script>(()=>{
 const select=document.getElementById('modeSelect');
 const page=location.pathname.split('/').pop()||'index.html';
 select.value=['index.html','practice.html','quiz.html'].includes(page)?page:'index.html';
-select.addEventListener('change',()=>{if(document.body.classList.contains('running')){select.value=page;return;}location.href='./'+select.value+'?v=1.9';});
+select.addEventListener('change',()=>{if(document.body.classList.contains('running')){select.value=page;return;}location.href='./'+select.value+'?v=2.0';});
 function sync(){select.disabled=document.body.classList.contains('running');}
 new MutationObserver(sync).observe(document.body,{attributes:true,attributeFilter:['class']});sync();
 
-})();</script><script type="module" src="./quiz.js?v=1.9"></script></html>
+})();</script><script type="module" src="./quiz.js?v=2.0"></script></html>

@@ -26,7 +26,7 @@
 .practice-totals{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:14px}.practice-total{background:#0e1b2c;border-radius:12px;padding:12px 6px;text-align:center}.practice-total span{display:block;color:var(--muted);font-size:12px}.practice-total strong{font-size:23px;color:var(--mint)}.completion-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:18px}#completed{min-width:140px}#completionNotice{font-size:13px;color:var(--mint)}#recordError{color:#ffb3b3;font-size:13px}.sectionhead{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
 </style>
 <main>
-<header><div class="brand-lockup"><div class="brand">CUBE <span>TIME</span></div><span class="top-version" aria-label="ソフトのバージョン">v1.9</span></div><label class="mode-picker">モード<select id="modeSelect" aria-label="モード選択"><option value="index.html">タイム計測</option><option value="practice.html" selected>白十字練習</option><option value="quiz.html">配色クイズ</option></select></label></header><h1 class="page-title">白十字練習</h1>
+<header><div class="brand-lockup"><div class="brand">CUBE <span>TIME</span></div><span class="top-version" aria-label="ソフトのバージョン">v2.0</span></div><label class="mode-picker">モード<select id="modeSelect" aria-label="モード選択"><option value="index.html">タイム計測</option><option value="practice.html" selected>白十字練習</option><option value="quiz.html">配色クイズ</option></select></label></header><h1 class="page-title">白十字練習</h1>
 <p class="note">白十字と側面の色をそろえ、黄色を上・緑を手前にして開始してください。白十字をそろえたら、そのまま次の問題に進めます。</p>
 <section class="panel">
 <form id="generateForm" class="controls">
@@ -68,7 +68,7 @@
 const select=document.getElementById('modeSelect');
 const page=location.pathname.split('/').pop()||'index.html';
 select.value=['index.html','practice.html','quiz.html'].includes(page)?page:'index.html';
-select.addEventListener('change',()=>{if(document.body.classList.contains('running')){select.value=page;return;}location.href='./'+select.value+'?v=1.9';});
+select.addEventListener('change',()=>{if(document.body.classList.contains('running')){select.value=page;return;}location.href='./'+select.value+'?v=2.0';});
 function sync(){select.disabled=document.body.classList.contains('running');}
 new MutationObserver(sync).observe(document.body,{attributes:true,attributeFilter:['class']});sync();
 
