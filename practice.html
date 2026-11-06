@@ -58,7 +58,7 @@
 <p id="calendarSummary"></p><div id="calendarBody"></div>
 <p id="calendarDetail" class="calendar-detail" role="status"></p>
 </section>
-<footer><p class="app-version" aria-label="ソフトのバージョン">CUBE TIME · v1.7</p></footer>
+<footer><p class="app-version" aria-label="ソフトのバージョン">CUBE TIME · v1.8</p></footer>
 </main>
 <script src="./calendar.js?v=1.5"></script>
 <script type="module" src="./practice.js?v=1.5"></script>
@@ -66,7 +66,7 @@
 const select=document.getElementById('modeSelect');
 const page=location.pathname.split('/').pop()||'index.html';
 select.value=['index.html','practice.html','quiz.html'].includes(page)?page:'index.html';
-select.addEventListener('change',()=>{if(document.body.classList.contains('running')){select.value=page;return;}location.href='./'+select.value+'?v=1.7';});
+select.addEventListener('change',()=>{if(document.body.classList.contains('running')){select.value=page;return;}location.href='./'+select.value+'?v=1.8';});
 function sync(){select.disabled=document.body.classList.contains('running');}
 new MutationObserver(sync).observe(document.body,{attributes:true,attributeFilter:['class']});sync();
 

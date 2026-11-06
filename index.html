@@ -76,7 +76,7 @@
 <div class="practice-since" aria-label="記録開始日と経過期間">
 <div class="since-item"><span>記録開始日</span><strong id="recordStartDate">—</strong></div>
 <div class="since-item"><span>開始から</span><strong id="recordElapsed">—</strong></div>
-</div><p class="app-version" aria-label="ソフトのバージョン">CUBE TIME · v1.7</p></footer>
+</div><p class="app-version" aria-label="ソフトのバージョン">CUBE TIME · v1.8</p></footer>
 </main>
 <dialog id="scrambleSettingsDialog" class="settings-dialog" aria-labelledby="scrambleSettingsTitle">
 <form id="scrambleSettingsForm">
@@ -336,7 +336,7 @@ if(!running)prepareScramble();
 const select=document.getElementById('modeSelect');
 const page=location.pathname.split('/').pop()||'index.html';
 select.value=['index.html','practice.html','quiz.html'].includes(page)?page:'index.html';
-select.addEventListener('change',()=>{if(document.body.classList.contains('running')){select.value=page;return;}location.href='./'+select.value+'?v=1.7';});
+select.addEventListener('change',()=>{if(document.body.classList.contains('running')){select.value=page;return;}location.href='./'+select.value+'?v=1.8';});
 function sync(){select.disabled=document.body.classList.contains('running');}
 new MutationObserver(sync).observe(document.body,{attributes:true,attributeFilter:['class']});sync();
 
