@@ -6,7 +6,7 @@
 <meta name="description" content="ルービックキューブのタイム計測、記録、成長グラフ">
 <title>CUBE TIME｜キューブタイマー</title>
 <link rel="stylesheet" href="./calendar.css?v=compact2">
-<link rel="stylesheet" href="./mode-nav.css?v=1.6">
+<style>.mode-picker{margin-left:auto;display:flex;flex-direction:column;gap:3px;color:#9dadc3;font-size:11px;flex-shrink:0}.mode-picker select{font:14px system-ui;color:#edf3fb;background:#1d2f46;border:1px solid #52637a;border-radius:10px;min-height:44px;padding:8px;max-width:160px}header{gap:10px}.mode-picker select:focus-visible{outline:3px solid #86efc5}header{flex-wrap:nowrap}header .brand{font-size:clamp(14px,4vw,19px);white-space:nowrap}</style>
 <style>
 :root{color-scheme:dark;--bg:#0c1421;--panel:#142236;--muted:#9dadc3;--line:#2a3a50;--mint:#86efc5;--text:#edf3fb}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Noto Sans JP",sans-serif}main{max-width:1000px;margin:auto;padding:30px 22px 60px}header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}.brand{font-size:19px;letter-spacing:.12em;font-weight:850}.brand span{color:var(--mint)}.tag{color:var(--muted);font-size:12px}.intro{font-size:13px;color:var(--muted)}h1{font-size:24px;margin:8px 0 24px}h2{font-size:17px;margin:0}.panel{background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:24px;margin-bottom:18px}.timer{text-align:center;padding:18px 24px}.status{color:var(--mint);font-size:13px;min-height:0}.status:empty{display:none}.digits{font-variant-numeric:tabular-nums;font-size:clamp(48px,11vw,96px);letter-spacing:-.05em;font-weight:650;margin:6px 0 16px}.buttons{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(52px,.48fr);align-items:center;gap:10px}button,select,.filebutton{font:inherit;border-radius:12px;border:1px solid var(--line);padding:12px 16px;background:#1d2f46;color:var(--text);cursor:pointer;min-height:46px}button:focus-visible,select:focus-visible,.filebutton:focus-within{outline:3px solid var(--mint);outline-offset:3px}button:disabled{opacity:.3;cursor:default}.buttons button{font-weight:750;min-height:76px;touch-action:manipulation;user-select:none}.start{background:var(--mint);color:#09251c;border:0}.stop{background:#f5f7fb;color:#122235}.fail{color:#ffb3b3;border-color:#79505a;background:#3b2836}.hint{font-size:12px;color:var(--muted);line-height:1.8;margin:16px 0 0}.stats{margin:18px 0}.stats .stat{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 18px}.stats .stat strong{margin:0}.stat{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px}.stat small{color:var(--muted);font-size:12px}.stat strong{display:block;font-size:24px;margin-top:9px;font-variant-numeric:tabular-nums}.sectionhead{display:flex;gap:12px;justify-content:space-between;align-items:center;flex-wrap:wrap}.legend{font-size:12px;color:var(--muted);margin:15px 0}.legend span{color:var(--mint)}svg{display:block;width:100%;height:auto;min-height:180px}.empty{text-align:center;color:var(--muted);padding:45px 8px;font-size:14px}.tablewrap{overflow:auto;max-height:440px}thead{position:sticky;top:0;background:var(--panel);z-index:1}.record-check{width:22px;height:22px;accent-color:var(--mint);cursor:pointer}.check-cell{padding:12px;min-width:44px}.history-tools{margin:14px 0}.delete-selected{color:#ffb3b3}input:focus-visible{outline:3px solid var(--mint)}table{width:100%;border-collapse:collapse;font-size:14px}th,td{text-align:left;padding:14px 6px;border-bottom:1px solid var(--line);white-space:nowrap}th{color:var(--muted);font-size:12px}td.time{font-variant-numeric:tabular-nums;font-weight:700}.dnf{color:#ffb3b3}.delete{font-size:12px;padding:5px 10px;min-height:36px;background:transparent}.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}.toolbar button,.filebutton{font-size:12px}.filebutton input{position:absolute;width:1px;height:1px;opacity:0}footer{color:var(--muted);font-size:12px;line-height:1.9}.practice-since{display:flex;flex-wrap:wrap;gap:12px 36px;border-top:1px solid var(--line);margin-top:20px;padding-top:18px}.practice-since .since-item{display:flex;flex-direction:column;gap:3px}.practice-since strong{color:var(--text);font-size:16px;font-weight:700;font-variant-numeric:tabular-nums}#notice{color:#ffd18c;line-height:1.7;font-size:13px}body.running .timer{border-color:var(--mint)}@media(max-width:560px){main{padding:22px 14px 40px}.tag{display:none}.panel{padding:18px}.stat strong{font-size:23px}.buttons{gap:7px}.buttons button{padding:12px 4px;font-size:14px}h1{font-size:21px}}
 .ma-display{display:inline-flex;align-items:center;gap:7px;flex-wrap:wrap}.ma-dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:#ffcc80}.ma-display strong{color:#ffcc80;font-size:15px;font-weight:750;font-variant-numeric:tabular-nums}
@@ -21,7 +21,7 @@
 .ma-head{flex-wrap:wrap}#maLatest{white-space:nowrap}
 </style>
 <main>
-<header><div class="brand">▦ CUBE <span>TIME</span></div><label class="mode-picker">モード<select id="modeSelect" aria-label="モード選択"><option value="index.html">タイム計測</option><option value="practice.html">白十字練習</option><option value="quiz.html">配色クイズ</option></select></label></header>
+<header><div class="brand">▦ CUBE <span>TIME</span></div><label class="mode-picker">モード<select id="modeSelect" aria-label="モード選択"><option value="index.html" selected>タイム計測</option><option value="practice.html">白十字練習</option><option value="quiz.html">配色クイズ</option></select></label></header>
 <div class="sectionhead"><p class="intro">ルービックキューブ 練習ログ</p></div>
 <section class="panel" aria-label="混ぜ方"><div class="sectionhead"><h2>今回のスクランブル · 3×3</h2><button id="scrambleSettingsBtn" type="button">手数：標準</button><button id="newScramble">別の手順にする</button></div><p id="scramble" role="status" style="font:600 22px/1.9 ui-monospace,monospace;overflow-wrap:anywhere;color:var(--mint)">手順を準備しています…</p>
 <div class="cross-actions"><button id="crossBtn" type="button" disabled aria-expanded="false" aria-controls="crossResult">白十字の最短手順を見る</button></div>
@@ -76,7 +76,7 @@
 <div class="practice-since" aria-label="記録開始日と経過期間">
 <div class="since-item"><span>記録開始日</span><strong id="recordStartDate">—</strong></div>
 <div class="since-item"><span>開始から</span><strong id="recordElapsed">—</strong></div>
-</div><p class="app-version" aria-label="ソフトのバージョン">CUBE TIME · v1.6</p></footer>
+</div><p class="app-version" aria-label="ソフトのバージョン">CUBE TIME · v1.7</p></footer>
 </main>
 <dialog id="scrambleSettingsDialog" class="settings-dialog" aria-labelledby="scrambleSettingsTitle">
 <form id="scrambleSettingsForm">
@@ -332,5 +332,13 @@ let timeout;try{const value=await Promise.race([import('./scrambler.js').then(m=
 $('newScramble').onclick=()=>{if(!running&&(!currentScramble||confirm('完成状態に戻してから新しい手順で混ぜてください。手順を変更しますか？')))prepareScramble()};
 if(!running)prepareScramble();
 </script>
-<script src="./mode-nav.js?v=1.6" defer></script>
+<script>(()=>{
+const select=document.getElementById('modeSelect');
+const page=location.pathname.split('/').pop()||'index.html';
+select.value=['index.html','practice.html','quiz.html'].includes(page)?page:'index.html';
+select.addEventListener('change',()=>{if(document.body.classList.contains('running')){select.value=page;return;}location.href='./'+select.value+'?v=1.7';});
+function sync(){select.disabled=document.body.classList.contains('running');}
+new MutationObserver(sync).observe(document.body,{attributes:true,attributeFilter:['class']});sync();
+
+})();</script>
 </html>
