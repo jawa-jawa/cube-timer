@@ -5,6 +5,7 @@
 <meta name="theme-color" content="#101c2d">
 <title>白十字練習｜CUBE TIME</title>
 <link rel="stylesheet" href="./calendar.css?v=1.5">
+<link rel="stylesheet" href="./mode-nav.css?v=1.6">
 <style>
 :root{color-scheme:dark;--bg:#0c1421;--panel:#142236;--text:#edf3fb;--muted:#9dadc3;--mint:#86efc5;--line:#2a3a50}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.7 system-ui,sans-serif}main{max-width:1000px;margin:auto;padding:24px 18px 50px}header,.head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}h1{font-size:23px}h2{font-size:17px;margin:0}p{margin:10px 0}.panel{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:22px;margin-top:18px}button,select,input,.back{font:inherit;color:var(--text);background:#1d2f46;border:1px solid #52637a;border-radius:10px;min-height:46px;padding:10px 14px}button,.back{cursor:pointer}button:disabled{opacity:.4}a.back{text-decoration:none}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--mint);outline-offset:3px}.controls{display:flex;gap:12px;align-items:end;flex-wrap:wrap}.controls label{display:flex;flex-direction:column;gap:5px;font-size:13px}input{width:110px}.primary{background:var(--mint);color:#09251c;font-weight:700}.note{font-size:13px;color:var(--muted)}.moves{font:650 clamp(18px,4vw,24px)/1.9 ui-monospace,monospace;overflow-wrap:anywhere;color:var(--mint)}.count{font-size:13px;color:var(--mint)}#error{color:#ffb3b3}
 .cube-stage{--cube-size:clamp(130px,42vw,190px);height:350px;position:relative;display:flex;align-items:center;justify-content:center;perspective:850px;touch-action:none;user-select:none;-webkit-user-select:none;cursor:grab;border-radius:16px;background:radial-gradient(ellipse at center,#243b54 0%,#101c2d 70%);margin-top:18px;overflow:hidden}
@@ -23,7 +24,7 @@
 .practice-totals{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:14px}.practice-total{background:#0e1b2c;border-radius:12px;padding:12px 6px;text-align:center}.practice-total span{display:block;color:var(--muted);font-size:12px}.practice-total strong{font-size:23px;color:var(--mint)}.completion-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:18px}#completed{min-width:140px}#completionNotice{font-size:13px;color:var(--mint)}#recordError{color:#ffb3b3;font-size:13px}.sectionhead{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
 </style>
 <main>
-<header><h1>白十字練習</h1><a class="back" href="./index.html">タイマーに戻る</a></header>
+<header><h1>白十字練習</h1><label class="mode-picker">モード<select id="modeSelect" aria-label="モード選択"><option value="index.html">タイム計測</option><option value="practice.html">白十字練習</option><option value="quiz.html">配色クイズ</option></select></label></header>
 <p class="note">白十字と側面の色をそろえ、黄色を上・緑を手前にして開始してください。白十字をそろえたら、そのまま次の問題に進めます。</p>
 <section class="panel">
 <form id="generateForm" class="controls">
@@ -57,8 +58,9 @@
 <p id="calendarSummary"></p><div id="calendarBody"></div>
 <p id="calendarDetail" class="calendar-detail" role="status"></p>
 </section>
-<footer><p class="app-version" aria-label="ソフトのバージョン">CUBE TIME · v1.5</p></footer>
+<footer><p class="app-version" aria-label="ソフトのバージョン">CUBE TIME · v1.6</p></footer>
 </main>
 <script src="./calendar.js?v=1.5"></script>
 <script type="module" src="./practice.js?v=1.5"></script>
+<script src="./mode-nav.js?v=1.6" defer></script>
 </html>

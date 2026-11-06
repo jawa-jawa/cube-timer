@@ -1,0 +1,1 @@
+.mode-picker{margin-left:auto;display:flex;flex-direction:column;gap:3px;color:#9dadc3;font-size:11px;flex-shrink:0}.mode-picker select{font:14px system-ui;color:#edf3fb;background:#1d2f46;border:1px solid #52637a;border-radius:10px;min-height:44px;padding:8px;max-width:160px}header{gap:10px}.mode-picker select:focus-visible{outline:3px solid #86efc5}
